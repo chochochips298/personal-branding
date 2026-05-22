@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio | FerissaSpace</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<script>
+// Fix untuk memastikan modal berfungsi
+function openModal(data) {
+  const modal = document.getElementById('modalOverlay');
+  if (!modal) return;
+  document.getElementById('modalImg').src = data.img || '';
+  document.getElementById('modalTitle').innerHTML = data.title || '';
+  document.getElementById('modalDesc').innerHTML = data.desc || '';
+  
+  const tagsEl = document.getElementById('modalTags');
+  tagsEl.innerHTML = '';
+  if (data.tags) {
+    data.tags.forEach(tag => {
+      const span = document.createElement('span');
+      span.className = 'modal-tag';
+      span.innerHTML = tag;
+      tagsEl.appendChild(span);
+    });
+  }
+  
+  const actionsEl = document.getElementById('modalActions');
+  actionsEl.innerHTML = '';
+  if (data.actions) {
+    data.actions.forEach(action => {
+      const btn = document.createElement('a');
+      btn.className = action.cls || 'btn-view';
+      btn.innerHTML = `<i class="${action.icon}"></i> ${action.label}`;
+      btn.href = action.href || '#';
+      if (action.href && action.href !== '#') btn.target = '_blank';
+      btn.onclick = function(e) { e.stopPropagation(); };
+      actionsEl.appendChild(btn);
+    });
+  }
+  
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+// Close modal
+document.getElementById('modalClose')?.addEventListener('click', function() {
+  document.getElementById('modalOverlay').style.display = 'none';
+  document.body.style.overflow = '';
+});
+document.getElementById('modalOverlay')?.addEventListener('click', function(e) {
+  if (e.target === this) {
+    this.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+});
+
+// Pagination certificates
+let certPage = 0;
+const certsPerPage = 6;
+const certItems = document.querySelectorAll('.cert-item');
+const totalCerts = certItems.length;
+const totalPages = Math.ceil(totalCerts / certsPerPage);
+
+function showCertPage(page) {
+  certItems.forEach((item, index) => {
+    item.style.display = (index >= page * certsPerPage && index < (page + 1) * certsPerPage) ? '' : 'none';
+  });
+  document.getElementById('certPageInfo').innerHTML = `Halaman ${page + 1} / ${totalPages}`;
+  document.getElementById('certPrev').disabled = page === 0;
+  document.getElementById('certNext').disabled = page === totalPages - 1;
+}
+
+document.getElementById('certPrev')?.addEventListener('click', () => {
+  if (certPage > 0) { certPage--; showCertPage(certPage); }
+});
+document.getElementById('certNext')?.addEventListener('click', () => {
+  if (certPage < totalPages - 1) { certPage++; showCertPage(certPage); }
+});
+
+showCertPage(0);
+</script>
+<body>
+
+  <div class="animated-bg"></div>
+  <div class="hearts-container" id="hearts-container"></div>
+
+
+  <!-- POPUP MODAL -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-box">
+      <button class="modal-close" id="modalClose">&times;</button>
+      <img class="modal-img" id="modalImg" src="" alt="">
+      <div class="modal-title" id="modalTitle"></div>
+      <div class="modal-tags" id="modalTags"></div>
+      <div class="modal-desc" id="modalDesc"></div>
+      <div class="modal-actions" id="modalActions"></div>
+    </div>
+  </div>
+
+  <nav class="navbar">
+    <a href="index.html" class="logo">✨ FerissaSpace</a>
+    <ul class="nav-menu">
+      <li><a href="index.html">Beranda</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="skills.html">Skills</a></li>
+      <li><a href="portfolio.html">Portfolio</a></li>
+      <li><a href="cv.html">CV</a></li>
+    </ul>
+    <div class="menu-toggle"><i class="fas fa-bars"></i></div>
+  </nav>
+
+  <main class="container">
+    <section id="portfolio" class="section-card">
+      <h2 class="section-title"><i class="fas fa-briefcase"></i> Portfolio</h2>
+
+      <!-- ══ PROJECTS ══ -->
+      <div class="portfolio-category">
+        <div class="category-header">
+          <i class="fas fa-code"></i>
+          <h3>📁 Projects</h3>
+        </div>
+        <div class="portfolio-grid">
+
+          <div class="portfolio-item" onclick="openModal({
+            img:'foto2.png',
+            title:'Pixel Vanguard',
+            tags:['HTML','CSS','JavaScript','Responsive'],
+            desc:'Website modern bertema teknologi dengan tampilan aesthetic, responsive, dan animasi halus. Dibuat dengan penuh perhatian terhadap detail visual dan performa.',
+            actions:[{label:'Live Demo',cls:'btn-demo',icon:'fas fa-external-link-alt',href:'https://pixel-vanguard-eosin.vercel.app'}]
+          })">
+            <div class="portfolio-img-wrapper">
+              <img src="foto2.png" alt="Pixel Vanguard" class="portfolio-img"
+                   onerror="this.src='https://placehold.co/600x400/f0d5e8/b84a72?text=Pixel+Vanguard'">
+            </div>
+            <div class="portfolio-info">
+              <h4>Pixel Vanguard</h4>
+              <p>Website modern bertema teknologi dengan tampilan aesthetic, responsive, dan animasi halus.</p>
+              <div class="btn-group">
+                <span class="btn-view"><i class="fas fa-eye"></i> Preview</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="portfolio-item" onclick="openModal({
+            img:'foto3.png',
+            title:'MindPace',
+            tags:['HTML','CSS','JavaScript','Productivity'],
+            desc:'Website produktivitas dan fokus dengan desain clean, interaktif, dan fitur manajemen waktu. Cocok untuk pelajar dan pekerja yang butuh fokus optimal.',
+            actions:[{label:'Live Demo',cls:'btn-demo',icon:'fas fa-external-link-alt',href:'https://mindpace-ruddy.vercel.app/'}]
+          })">
+            <div class="portfolio-img-wrapper">
+              <img src="foto3.png" alt="MindPace" class="portfolio-img"
+                   onerror="this.src='https://placehold.co/600x400/d5e8f0/4a90e2?text=MindPace'">
+            </div>
+            <div class="portfolio-info">
+              <h4>MindPace</h4>
+              <p>Website produktivitas dan fokus dengan desain clean, interaktif, dan fitur manajemen waktu.</p>
+              <div class="btn-group">
+                <span class="btn-view"><i class="fas fa-eye"></i> Preview</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ══ DESIGN ══ -->
+      <div class="portfolio-category">
+        <div class="category-header">
+          <i class="fas fa-palette"></i>
+          <h3>🎨 Design</h3>
+        </div>
+        <div class="design-scroll">
+
+          <div class="portfolio-item" onclick="openModal({
+            img:'canva1.png',
+            title:'TaskFlow UI/UX',
+            tags:['Figma','UI/UX','Prototype'],
+            desc:'High-fidelity prototype di Figma untuk aplikasi manajemen tugas. Dirancang dengan prinsip usability dan estetika modern.',
+            actions:[{label:'View Design',cls:'btn-view',icon:'fas fa-eye',href:'canva1.png'}]
+          })">
+            <div class="portfolio-img-wrapper">
+              <img src="canva1.png" alt="TaskFlow UI/UX" class="portfolio-img"
+                   onerror="this.src='https://placehold.co/600x400/f0d5e8/a855f7?text=TaskFlow'">
+            </div>
+            <div class="portfolio-info">
+              <h4>TaskFlow UI/UX</h4>
+              <p>High-fidelity prototype di Figma untuk aplikasi manajemen tugas.</p>
+              <div class="btn-group"><span class="btn-view"><i class="fas fa-eye"></i> Preview</span></div>
+            </div>
+          </div>
+
+          <div class="portfolio-item" onclick="openModal({
+            img:'canva2.png',
+            title:'Poster Digital Campaign',
+            tags:['Canva','Poster','Literasi Digital'],
+            desc:'Desain poster literasi digital yang memenangkan juara favorit. Mengedepankan tipografi bold dan palet warna yang mencolok.',
+            actions:[{label:'View',cls:'btn-view',icon:'fas fa-eye',href:'canva2.png'}]
+          })">
+            <div class="portfolio-img-wrapper">
+              <img src="canva2.png" alt="Poster Campaign" class="portfolio-img"
+                   onerror="this.src='https://placehold.co/600x400/d5e8f0/4a90e2?text=Poster'">
+            </div>
+            <div class="portfolio-info">
+              <h4>Poster Digital Campaign</h4>
+              <p>Desain poster literasi digital yang memenangkan juara favorit.</p>
+              <div class="btn-group"><span class="btn-view"><i class="fas fa-eye"></i> Preview</span></div>
+            </div>
+          </div>
+
+          <div class="portfolio-item" onclick="openModal({
+            img:'canva3.png',
+            title:'Mobile App UI Kit',
+            tags:['Figma','UI Kit','Soft Pink & Blue'],
+            desc:'UI Kit tema soft pink & blue aesthetic modern. Terdiri dari komponen reusable untuk pengembangan aplikasi mobile.',
+            actions:[{label:'View',cls:'btn-view',icon:'fas fa-eye',href:'canva3.png'}]
+          })">
+            <div class="portfolio-img-wrapper">
+              <img src="canva3.png" alt="Mobile UI Kit" class="portfolio-img"
+                   onerror="this.src='https://placehold.co/600x400/e8d5f0/a855f7?text=UI+Kit'">
+            </div>
+            <div class="portfolio-info">
+              <h4>Mobile App UI Kit</h4>
+              <p>UI Kit tema soft pink & blue aesthetic modern.</p>
+              <div class="btn-group"><span class="btn-view"><i class="fas fa-eye"></i> Preview</span></div>
+            </div>
+          </div>
+
+          <div class="portfolio-item" onclick="openModal({
+            img:'canva4.jpg',
+            title:'Dashboard Design',
+            tags:['Figma','Dashboard','Clean UI'],
+            desc:'Dashboard modern dengan tampilan clean dan responsive. Cocok untuk aplikasi analitik dan manajemen data.',
+            actions:[{label:'View',cls:'btn-view',icon:'fas fa-eye',href:'canva4.jpg'}]
+          })">
+            <div class="portfolio-img-wrapper">
+              <img src="canva4.jpg" alt="Dashboard Design" class="portfolio-img"
+                   onerror="this.src='https://placehold.co/600x400/e8e0d5/f59e0b?text=Dashboard'">
+            </div>
+            <div class="portfolio-info">
+              <h4>Dashboard Design</h4>
+              <p>Dashboard modern dengan tampilan clean dan responsive.</p>
+              <div class="btn-group"><span class="btn-view"><i class="fas fa-eye"></i> Preview</span></div>
+            </div>
+          </div>
+
+          <div class="portfolio-item" onclick="openModal({
+            img:'canva5.png',
+            title:'Creative Landing Page',
+            tags:['HTML','CSS','Animation','Smooth Scroll'],
+            desc:'Landing page aesthetic dengan animasi smooth scrolling. Didesain untuk menampilkan produk kreatif dengan visual yang memukau.',
+            actions:[{label:'View',cls:'btn-view',icon:'fas fa-eye',href:'canva5.png'}]
+          })">
+            <div class="portfolio-img-wrapper">
+              <img src="canva5.png" alt="Landing Page" class="portfolio-img"
+                   onerror="this.src='https://placehold.co/600x400/d5e8d0/4aae77?text=Landing+Page'">
+            </div>
+            <div class="portfolio-info">
+              <h4>Creative Landing Page</h4>
+              <p>Landing page aesthetic dengan animasi smooth scrolling.</p>
+              <div class="btn-group"><span class="btn-view"><i class="fas fa-eye"></i> Preview</span></div>
+            </div>
+          </div>
+
+          <div class="portfolio-item" onclick="openModal({
+            img:'canva6.jpeg',
+            title:'Social Media Design',
+            tags:['Canva','Instagram','Pastel Branding'],
+            desc:'Feed Instagram aesthetic dengan branding pastel modern. Menciptakan identitas visual yang konsisten dan eye-catching di media sosial.',
+            actions:[{label:'View',cls:'btn-view',icon:'fas fa-eye',href:'canva6.jpeg'}]
+          })">
+            <div class="portfolio-img-wrapper">
+              <img src="canva6.jpeg" alt="Social Media Design" class="portfolio-img"
+                   onerror="this.src='https://placehold.co/600x400/f5e0c0/fbbf24?text=Social+Media'">
+            </div>
+            <div class="portfolio-info">
+              <h4>Social Media Design</h4>
+              <p>Feed Instagram aesthetic dengan branding pastel modern.</p>
+              <div class="btn-group"><span class="btn-view"><i class="fas fa-eye"></i> Preview</span></div>
+            </div>
+          </div>
+
+          <div class="portfolio-item" onclick="openModal({
+            img:'canva7.png',
+            title:'Branding Kit',
+            tags:['Canva','Branding','Visual Identity'],
+            desc:'Visual identity dan brand guideline untuk startup digital. Mencakup logo, palet warna, tipografi, dan panduan penggunaan brand.',
+            actions:[{label:'View',cls:'btn-view',icon:'fas fa-eye',href:'canva7.png'}]
+          })">
+            <div class="portfolio-img-wrapper">
+              <img src="canva7.png" alt="Branding Kit" class="portfolio-img"
+                   onerror="this.src='https://placehold.co/600x400/e0d5f0/a855f7?text=Branding+Kit'">
+            </div>
+            <div class="portfolio-info">
+              <h4>Branding Kit</h4>
+              <p>Visual identity dan brand guideline untuk startup digital.</p>
+              <div class="btn-group"><span class="btn-view"><i class="fas fa-eye"></i> Preview</span></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ══ CERTIFICATES (paginated, 10 cards) ══ -->
+      <div class="portfolio-category">
+        <div class="category-header">
+          <i class="fas fa-certificate"></i>
+          <h3>🏆 Certificates</h3>
+        </div>
+
+        <div class="cert-grid" id="certGrid">
+
+          <!-- CERT 1 -->
+          <div class="cert-item" onclick="openModal({
+            img:'https://placehold.co/600x400/f0d5e8/a855f7?text=Web+Dev+Bootcamp',
+            title:'Web Development Bootcamp',
+            tags:['HTML','CSS','JavaScript','CODEPOLITAN'],
+            desc:'Pelatihan intensif HTML, CSS, JavaScript dari CODEPOLITAN. Mencakup dasar hingga pembuatan website dinamis modern.',
+            actions:[{label:'Lihat',cls:'btn-view',icon:'fas fa-certificate',href:'#'},{label:'Download',cls:'btn-github',icon:'fas fa-download',href:'#'}]
+          })">
+            <div class="cert-img-wrapper">
+              <img src="Dicoding1.png" alt="Web Dev Bootcamp" class="cert-img">
+            </div>
+            <div class="cert-info">
+              <h4>Web Development Bootcamp</h4>
+              <p>Pelatihan intensif HTML, CSS, JavaScript dari CODEPOLITAN.</p>
+              <div class="cert-btn-group">
+                <span class="btn-view" style="font-size:0.7rem;padding:0.4rem 0.9rem;"><i class="fas fa-eye"></i> Preview</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- CERT 2 -->
+          <div class="cert-item" onclick="openModal({
+            img:'https://placehold.co/600x400/d5e8f0/4a90e2?text=UI/UX+Design',
+            title:'UI/UX Design Fundamental',
+            tags:['UI/UX','Dicoding','Figma'],
+            desc:'Sertifikasi dasar UI/UX design dari Dicoding dengan predikat memuaskan. Meliputi prinsip desain, prototyping, dan user research.',
+            actions:[{label:'Lihat',cls:'btn-view',icon:'fas fa-certificate',href:'#'},{label:'Download',cls:'btn-github',icon:'fas fa-download',href:'#'}]
+          })">
+            <div class="cert-img-wrapper">
+              <img src="Dicoding2.png" alt="UI/UX Design" class="cert-img">
+            </div>
+            <div class="cert-info">
+              <h4>UI/UX Design Fundamental</h4>
+              <p>Sertifikasi dasar UI/UX design dari Dicoding.</p>
+              <div class="cert-btn-group">
+                <span class="btn-view" style="font-size:0.7rem;padding:0.4rem 0.9rem;"><i class="fas fa-eye"></i> Preview</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- CERT 3 -->
+          <div class="cert-item" onclick="openModal({
+            img:'https://placehold.co/600x400/e8e0d5/f59e0b?text=Cisco+Networking',
+            title:'Cisco Networking Essentials',
+            tags:['Cisco','Networking','CCNA'],
+            desc:'Sertifikasi dasar jaringan komputer dan konfigurasi perangkat Cisco. Mencakup topologi jaringan, protokol, dan troubleshooting.',
+            actions:[{label:'Lihat',cls:'btn-view',icon:'fas fa-certificate',href:'#'},{label:'Download',cls:'btn-github',icon:'fas fa-download',href:'#'}]
+          })">
+            <div class="cert-img-wrapper">
+              <img src="Dicoding3.png" alt="Cisco Networking" class="cert-img">
+            </div>
+            <div class="cert-info">
+              <h4>Cisco Networking Essentials</h4>
+              <p>Sertifikasi dasar jaringan komputer dan konfigurasi Cisco.</p>
+              <div class="cert-btn-group">
+                <span class="btn-view" style="font-size:0.7rem;padding:0.4rem 0.9rem;"><i class="fas fa-eye"></i> Preview</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- CERT 4 -->
+          <div class="cert-item" onclick="openModal({
+            img:'https://placehold.co/600x400/d5f0e8/22c55e?text=Python+Dasar',
+            title:'Python Programming Dasar',
+            tags:['Python','Programming','Dicoding'],
+            desc:'Sertifikasi pemrograman Python dari Dicoding. Mencakup sintaks dasar, struktur data, fungsi, dan OOP.',
+            actions:[{label:'Lihat',cls:'btn-view',icon:'fas fa-certificate',href:'#'},{label:'Download',cls:'btn-github',icon:'fas fa-download',href:'#'}]
+          })">
+            <div class="cert-img-wrapper">
+              <img src="Dicoding4.png" alt="Python Dasar" class="cert-img">
+            </div>
+            <div class="cert-info">
+              <h4>Python Programming Dasar</h4>
+              <p>Sertifikasi pemrograman Python dari Dicoding.</p>
+              <div class="cert-btn-group">
+                <span class="btn-view" style="font-size:0.7rem;padding:0.4rem 0.9rem;"><i class="fas fa-eye"></i> Preview</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- CERT 5 -->
+          <div class="cert-item" onclick="openModal({
+            img:'https://placehold.co/600x400/f0e8d5/fb923c?text=Front-End+Dev',
+            title:'Front-End Web Development',
+            tags:['HTML','CSS','JavaScript','Responsive'],
+            desc:'Sertifikasi pengembangan front-end dari Belajar Coding. Meliputi pembuatan website responsif dan interaktif secara profesional.',
+            actions:[{label:'Lihat',cls:'btn-view',icon:'fas fa-certificate',href:'#'},{label:'Download',cls:'btn-github',icon:'fas fa-download',href:'#'}]
+          })">
+            <div class="cert-img-wrapper">
+              <img src="Dicoding5.png" alt="Front-End Dev" class="cert-img">
+            </div>
+            <div class="cert-info">
+              <h4>Front-End Web Development</h4>
+              <p>Sertifikasi pengembangan front-end dari Belajar Coding.</p>
+              <div class="cert-btn-group">
+                <span class="btn-view" style="font-size:0.7rem;padding:0.4rem 0.9rem;"><i class="fas fa-eye"></i> Preview</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- CERT 6 -->
+          <div class="cert-item" onclick="openModal({
+            img:'https://placehold.co/600x400/e8d5f0/9333ea?text=Digital+Marketing',
+            title:'Digital Marketing Fundamental',
+            tags:['Marketing','Digital','Google'],
+            desc:'Sertifikasi pemasaran digital dari Google Digital Garage. Mencakup SEO, SEM, media sosial, dan analitik web.',
+            actions:[{label:'Lihat',cls:'btn-view',icon:'fas fa-certificate',href:'#'},{label:'Download',cls:'btn-github',icon:'fas fa-download',href:'#'}]
+          })">
+            <div class="cert-img-wrapper">
+              <img src="Dicoding6.png" alt="Digital Marketing" class="cert-img">
+            </div>
+            <div class="cert-info">
+              <h4>Digital Marketing Fundamental</h4>
+              <p>Sertifikasi pemasaran digital dari Google Digital Garage.</p>
+              <div class="cert-btn-group">
+                <span class="btn-view" style="font-size:0.7rem;padding:0.4rem 0.9rem;"><i class="fas fa-eye"></i> Preview</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- CERT 7 -->
+          <div class="cert-item" onclick="openModal({
+            img:'https://placehold.co/600x400/d5e0f0/3b82f6?text=Cloud+Practitioner',
+            title:'Cloud Practitioner Essentials',
+            tags:['Cloud','AWS','Dicoding'],
+            desc:'Pengenalan layanan cloud computing menggunakan Amazon Web Services. Mencakup konsep dasar cloud, layanan utama, dan keamanan.',
+            actions:[{label:'Lihat',cls:'btn-view',icon:'fas fa-certificate',href:'#'},{label:'Download',cls:'btn-github',icon:'fas fa-download',href:'#'}]
+          })">
+            <div class="cert-img-wrapper">
+              <img src="Dicoding7.png" alt="Cloud Practitioner" class="cert-img">
+            </div>
+            <div class="cert-info">
+              <h4>Cloud Practitioner Essentials</h4>
+              <p>Pengenalan layanan cloud computing Amazon Web Services.</p>
+              <div class="cert-btn-group">
+                <span class="btn-view" style="font-size:0.7rem;padding:0.4rem 0.9rem;"><i class="fas fa-eye"></i> Preview</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- CERT 8 -->
+          <div class="cert-item" onclick="openModal({
+            img:'https://placehold.co/600x400/f5d5d5/ef4444?text=Cybersecurity',
+            title:'Cybersecurity Fundamentals',
+            tags:['Cybersecurity','Network','Cisco'],
+            desc:'Dasar-dasar keamanan siber dari Cisco Networking Academy. Meliputi ancaman siber, enkripsi, firewall, dan praktik keamanan.',
+            actions:[{label:'Lihat',cls:'btn-view',icon:'fas fa-certificate',href:'#'},{label:'Download',cls:'btn-github',icon:'fas fa-download',href:'#'}]
+          })">
+            <div class="cert-img-wrapper">
+              <img src="Dicoding3.png" alt="Cybersecurity" class="cert-img">
+            </div>
+            <div class="cert-info">
+              <h4>Cybersecurity Fundamentals</h4>
+              <p>Dasar-dasar keamanan siber dari Cisco Networking Academy.</p>
+              <div class="cert-btn-group">
+                <span class="btn-view" style="font-size:0.7rem;padding:0.4rem 0.9rem;"><i class="fas fa-eye"></i> Preview</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- CERT 9 -->
+          <div class="cert-item" onclick="openModal({
+            img:'https://placehold.co/600x400/d5f5e8/10b981?text=React+Basics',
+            title:'React JS Dasar',
+            tags:['React','JavaScript','Front-End'],
+            desc:'Pengenalan React JS dari platform Dicoding. Mencakup komponen, props, state, hooks, dan pembuatan SPA sederhana.',
+            actions:[{label:'Lihat',cls:'btn-view',icon:'fas fa-certificate',href:'#'},{label:'Download',cls:'btn-github',icon:'fas fa-download',href:'#'}]
+          })">
+            <div class="cert-img-wrapper">
+              <img src="Dicoding4.png" alt="React JS" class="cert-img">
+            </div>
+            <div class="cert-info">
+              <h4>React JS Dasar</h4>
+              <p>Pengenalan React JS dari platform Dicoding.</p>
+              <div class="cert-btn-group">
+                <span class="btn-view" style="font-size:0.7rem;padding:0.4rem 0.9rem;"><i class="fas fa-eye"></i> Preview</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- CERT 10 -->
+          <div class="cert-item" onclick="openModal({
+            img:'https://placehold.co/600x400/f5f0d5/eab308?text=Canva+Expert',
+            title:'Canva Design Expert',
+            tags:['Canva','Graphic Design','Visual'],
+            desc:'Sertifikasi ahli desain menggunakan Canva. Meliputi pembuatan konten visual, infografis, presentasi, dan materi pemasaran.',
+            actions:[{label:'Lihat',cls:'btn-view',icon:'fas fa-certificate',href:'#'},{label:'Download',cls:'btn-github',icon:'fas fa-download',href:'#'}]
+          })">
+            <div class="cert-img-wrapper">
+              <img src="Dicoding5.png" alt="Canva Expert" class="cert-img">
+            </div>
+            <div class="cert-info">
+              <h4>Canva Design Expert</h4>
+              <p>Sertifikasi ahli desain menggunakan Canva.</p>
+              <div class="cert-btn-group">
+                <span class="btn-view" style="font-size:0.7rem;padding:0.4rem 0.9rem;"><i class="fas fa-eye"></i> Preview</span>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /certGrid -->
+
+        <!-- Pagination -->
+        <div class="cert-pagination">
+          <button class="cert-page-btn" id="certPrev"><i class="fas fa-chevron-left"></i> Sebelumnya</button>
+          <span class="cert-page-info" id="certPageInfo"></span>
+          <button class="cert-page-btn" id="certNext">Selanjutnya <i class="fas fa-chevron-right"></i></button>
+        </div>
+      </div>
+
+      <!-- ══ AWARDS & COMPETITIONS ══ -->
+      <div class="portfolio-category">
+        <div class="category-header">
+          <i class="fas fa-trophy"></i>
+          <h3>🏅 Awards &amp; Competitions</h3>
+        </div>
+        <div class="portfolio-grid">
+
+          <div class="portfolio-item" onclick="openModal({
+            img:'https://placehold.co/600x400/f5e0c0/fbbf24?text=IONIC+2025',
+            title:'Lomba Jaringan 2025 (IONIC)',
+            tags:['Networking','Provinsi','Finalis'],
+            desc:'Finalis lomba jaringan tingkat provinsi dalam ajang IONIC 2025. Membuktikan kemampuan konfigurasi jaringan dan troubleshooting tingkat lanjut.',
+            actions:[{label:'Sertifikat',cls:'btn-award',icon:'fas fa-trophy',href:'#'},{label:'Detail',cls:'btn-view',icon:'fas fa-info-circle',href:'#'}]
+          })">
+            <div class="portfolio-img-wrapper">
+              <img src="lomba1" alt="Lomba Jaringan" class="portfolio-img">
+            </div>
+            <div class="portfolio-info">
+              <h4>Lomba Jaringan 2025 (IONIC)</h4>
+              <p>Finalis lomba jaringan tingkat provinsi.</p>
+              <div class="btn-group"><span class="btn-award"><i class="fas fa-trophy"></i> Lihat</span></div>
+            </div>
+          </div>
+
+          <div class="portfolio-item" onclick="openModal({
+            img:'https://placehold.co/600x400/e0d5f0/a855f7?text=Poster+Award',
+            title:'Lomba Desain Poster',
+            tags:['Design','Poster','Juara 2'],
+            desc:'Juara 2 lomba menyanyi. Lomba mengusung tema inovasi digital dengan pendekatan visual storytelling yang kuat.',
+            actions:[{label:'Lihat Karya',cls:'btn-award',icon:'fas fa-palette',href:'#'},{label:'Sertifikat',cls:'btn-view',icon:'fas fa-certificate',href:'#'}]
+          })">
+            <div class="portfolio-img-wrapper">
+              <img src="lomba2" alt="Lomba Menyanyi" class="portfolio-img">
+            </div>
+            <div class="portfolio-info">
+              <h4>Lomba Menyanyi</h4>
+              <p>Juara 1 lomba menyanyi.</p>
+              <div class="btn-group"><span class="btn-award"><i class="fas fa-palette"></i> Lihat</span></div>
+            </div>
+          </div>
+
+          <div class="portfolio-item" onclick="openModal({
+            img:'https://placehold.co/600x400/d0e5f5/4a90e2?text=Gemastik+2024',
+            title:'Gemastik 2024',
+            tags:['Gemastik','RPL','Finalis'],
+            desc:'Finalis bidang Pengembangan Perangkat Lunak dalam ajang Gemastik 2024. Mengembangkan aplikasi inovatif yang berfokus pada pengalaman pengguna.',
+            actions:[{label:'Piagam',cls:'btn-award',icon:'fas fa-medal',href:'#'},{label:'Portfolio',cls:'btn-view',icon:'fas fa-file-alt',href:'#'}]
+          })">
+            <div class="portfolio-img-wrapper">
+              <img src="https://placehold.co/600x400/d0e5f5/4a90e2?text=Gemastik+2024" alt="Gemastik" class="portfolio-img">
+            </div>
+            <div class="portfolio-info">
+              <h4>Gemastik 2024</h4>
+              <p>Menyanyi.</p>
+              <div class="btn-group"><span class="btn-award"><i class="fas fa-medal"></i> Lihat</span></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <footer>
+    <p><i class="fas fa-heart" style="color:#e86b9c;"></i> Personal Branding | Ferissa Ilen Aswa Aulia | 2025</p>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

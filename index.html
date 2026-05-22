@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ferissa Ilen Aswa Aulia | Home</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <style>
+/* ═══════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════ */
+.hero-section {
+  padding: 3rem 2.5rem 3.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* blobs */
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: 0.18;
+  pointer-events: none;
+  animation: blobFloat 8s ease-in-out infinite alternate;
+}
+@keyframes blobFloat {
+  from { transform: translate(0,0) scale(1); }
+  to   { transform: translate(20px,15px) scale(1.07); }
+}
+
+.hero-layout {
+  display: flex;
+  align-items: center;
+  gap: 5rem;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Photo Column ── */
+.photo-col {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.6rem;
+}
+
+.glow-frame {
+  position: relative;
+  width: 340px; height: 340px;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* outer aura */
+.glow-frame::before {
+  content: '';
+  position: absolute;
+  inset: -20px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(232,107,156,0.45) 0%, rgba(74,144,226,0.25) 50%, transparent 70%);
+  animation: auraPulse 3s ease-in-out infinite;
+}
+@keyframes auraPulse {
+  0%,100% { transform: scale(1);   opacity: 0.9; }
+  50%     { transform: scale(1.08); opacity: 0.6; }
+}
+
+/* spinning rainbow ring */
+.spin-ring {
+  position: absolute;
+  inset: -7px;
+  border-radius: 50%;
+  background: conic-gradient(
+    #ff6eb4 0deg, #ffb3d1 60deg, #87ceeb 120deg,
+    #4a90e2 180deg, #c47be8 240deg, #ff6eb4 360deg
+  );
+  animation: spinCW 5s linear infinite;
+  z-index: 0;
+}
+.spin-ring2 {
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  background: conic-gradient(
+    rgba(255,110,180,0.3) 0deg, rgba(74,144,226,0.3) 180deg, rgba(255,110,180,0.3) 360deg
+  );
+  animation: spinCCW 8s linear infinite;
+  filter: blur(4px);
+  z-index: 0;
+}
+@keyframes spinCW  { to { transform: rotate(360deg); } }
+@keyframes spinCCW { to { transform: rotate(-360deg); } }
+
+.photo-circle {
+  position: relative;
+  z-index: 2;
+  width: 320px; height: 320px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: white;
+  border: 5px solid white;
+  box-shadow:
+    0 0 0 2px rgba(255,255,255,0.8),
+    0 0 60px rgba(232,107,156,0.55),
+    0 0 120px rgba(74,144,226,0.25),
+    inset 0 0 30px rgba(255,110,180,0.08);
+  cursor: pointer;
+  transition: transform 0.5s ease;
+}
+.photo-circle:hover { transform: scale(1.04); }
+.photo-circle img {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+  transition: transform 0.5s ease;
+}
+.photo-circle:hover img { transform: scale(1.08); }
+
+/* sparkles */
+.sp {
+  position: absolute;
+  border-radius: 50%;
+  background: white;
+  z-index: 3;
+  animation: spPulse 2.2s ease-in-out infinite;
+}
+.sp:nth-child(1){ width:13px;height:13px; top:12px;  left:50%; transform:translateX(-50%); box-shadow:0 0 12px 5px rgba(255,110,180,1);   animation-delay:0s; }
+.sp:nth-child(2){ width:10px;height:10px; bottom:12px;left:50%; transform:translateX(-50%); box-shadow:0 0 12px 5px rgba(74,144,226,1);    animation-delay:0.55s; }
+.sp:nth-child(3){ width:10px;height:10px; left:12px;  top:50%;  transform:translateY(-50%); box-shadow:0 0 12px 5px rgba(196,123,232,1);   animation-delay:1.1s; }
+.sp:nth-child(4){ width:13px;height:13px; right:12px; top:50%;  transform:translateY(-50%); box-shadow:0 0 12px 5px rgba(255,180,80,1);    animation-delay:1.65s; }
+.sp:nth-child(5){ width:8px;height:8px;   top:18%;    left:12%; box-shadow:0 0 8px 3px rgba(255,110,180,0.9);   animation-delay:0.3s; }
+.sp:nth-child(6){ width:8px;height:8px;   bottom:18%; right:12%;box-shadow:0 0 8px 3px rgba(74,144,226,0.9);   animation-delay:0.9s; }
+@keyframes spPulse {
+  0%,100%{ opacity:1; transform:translateX(-50%) scale(1); }
+  50%    { opacity:0.25; transform:translateX(-50%) scale(0.4); }
+}
+.sp:nth-child(3),
+.sp:nth-child(4),
+.sp:nth-child(5),
+.sp:nth-child(6) {
+  animation-name: spPulse2;
+}
+@keyframes spPulse2 {
+  0%,100%{ opacity:1; transform:translateY(-50%) scale(1); }
+  50%    { opacity:0.2; transform:translateY(-50%) scale(0.3); }
+}
+.sp:nth-child(5),
+.sp:nth-child(6) {
+  animation-name: spPulse3;
+}
+@keyframes spPulse3 {
+  0%,100%{ opacity:1; transform:scale(1); }
+  50%    { opacity:0.2; transform:scale(0.4); }
+}
+
+/* status + social */
+.status-pill {
+  display: inline-flex; align-items: center; gap: 0.55rem;
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(12px);
+  border: 1.5px solid rgba(255,255,255,0.9);
+  padding: 0.6rem 1.6rem;
+  border-radius: 50px;
+  font-size: 0.84rem; font-weight: 600; color: #5a3a4a;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+}
+.status-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 0 3px rgba(34,197,94,0.3);
+  animation: greenPulse 1.6s ease-in-out infinite;
+}
+@keyframes greenPulse {
+  0%,100%{ box-shadow:0 0 0 3px rgba(34,197,94,0.3); }
+  50%    { box-shadow:0 0 0 8px rgba(34,197,94,0.08); }
+}
+
+.socials { display: flex; gap: 0.7rem; }
+.soc-btn {
+  width: 46px; height: 46px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.15rem;
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(8px);
+  border: 1.5px solid rgba(255,255,255,0.8);
+  color: #b84a72; text-decoration: none;
+  transition: all 0.3s;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+}
+.soc-btn:hover {
+  background: linear-gradient(135deg,#e86b9c,#4a90e2);
+  color: white; border-color: transparent;
+  transform: translateY(-5px) scale(1.14);
+  box-shadow: 0 10px 24px rgba(232,107,156,0.5);
+}
+
+/* ── Text Column ── */
+.text-col {
+  flex: 1;
+  min-width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.greet-badge {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: rgba(232,107,156,0.12);
+  border: 1.5px solid rgba(232,107,156,0.35);
+  padding: 0.45rem 1.3rem;
+  border-radius: 50px;
+  font-size: 0.88rem; font-weight: 700;
+  color: #e86b9c; letter-spacing: 1.5px;
+  width: fit-content;
+  animation: fadeUp 0.5s ease both;
+}
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(16px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+.hero-name-text {
+  font-size: clamp(2.2rem, 4.8vw, 3.8rem);
+  font-weight: 900;
+  line-height: 1.12;
+  min-height: 90px;
+  background: linear-gradient(135deg, #e86b9c 25%, #9b59b6 55%, #4a90e2 80%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: fadeUp 0.6s 0.1s ease both;
+}
+.hero-name-text .cursor {
+  display: inline-block; width: 4px; height: 1em;
+  vertical-align: middle;
+  background: linear-gradient(180deg,#e86b9c,#4a90e2);
+  margin-left: 4px;
+  animation: blink 0.75s step-end infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+.role-chips {
+  display: flex; flex-wrap: wrap; gap: 0.55rem;
+  animation: fadeUp 0.6s 0.2s ease both;
+}
+.chip {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(6px);
+  border: 1.5px solid rgba(232,107,156,0.25);
+  padding: 0.38rem 1.1rem;
+  border-radius: 30px;
+  font-size: 0.82rem; font-weight: 600; color: #b84a72;
+  transition: 0.25s;
+}
+.chip:hover {
+  background: rgba(255,255,255,0.85);
+  border-color: rgba(232,107,156,0.5);
+  transform: translateY(-2px);
+}
+.chip i { font-size: 0.85rem; }
+
+.hero-bio {
+  font-size: 0.97rem; line-height: 1.95;
+  color: #4a2a3a; max-width: 530px;
+  min-height: 80px;
+  animation: fadeUp 0.6s 0.3s ease both;
+}
+
+/* Stats */
+.stats-grid {
+  display: flex; flex-wrap: wrap; gap: 0.9rem;
+  animation: fadeUp 0.6s 0.4s ease both;
+}
+.stat-card {
+  background: rgba(255,255,255,0.55);
+  backdrop-filter: blur(10px);
+  border: 1.5px solid rgba(255,255,255,0.8);
+  border-radius: 1.1rem;
+  padding: 1.1rem 1.5rem;
+  text-align: center;
+  min-width: 90px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  transition: all 0.3s;
+  position: relative; overflow: hidden;
+}
+.stat-card::before {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg,#e86b9c,#4a90e2);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.3s;
+}
+.stat-card:hover { transform: translateY(-6px); box-shadow: 0 12px 30px rgba(232,107,156,0.2); }
+.stat-card:hover::before { transform: scaleX(1); }
+.stat-num {
+  font-size: 2rem; font-weight: 900; line-height: 1;
+  background: linear-gradient(135deg,#e86b9c,#4a90e2);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.stat-lbl { font-size: 0.69rem; font-weight: 700; color: #7a5a6a; margin-top: 0.3rem; letter-spacing: 0.5px; }
+
+/* CTAs */
+.cta-group {
+  display: flex; flex-wrap: wrap; gap: 0.9rem;
+  animation: fadeUp 0.6s 0.5s ease both;
+}
+.btn-main {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.95rem 2.3rem; border-radius: 50px;
+  font-size: 0.95rem; font-weight: 700; text-decoration: none;
+  background: linear-gradient(135deg,#e86b9c,#4a90e2);
+  color: white;
+  box-shadow: 0 6px 24px rgba(232,107,156,0.45);
+  transition: all 0.3s; font-family: 'Poppins', sans-serif;
+  border: none; cursor: pointer;
+}
+.btn-main:hover { transform: translateY(-4px); box-shadow: 0 14px 35px rgba(232,107,156,0.55); }
+.btn-out {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.95rem 2rem; border-radius: 50px;
+  font-size: 0.95rem; font-weight: 700; text-decoration: none;
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(8px);
+  border: 2px solid rgba(232,107,156,0.38);
+  color: #b84a72; transition: all 0.3s; font-family: 'Poppins', sans-serif;
+}
+.btn-out:hover { background: rgba(255,255,255,0.88); border-color:#e86b9c; transform:translateY(-3px); }
+.btn-out.blue { border-color:rgba(74,144,226,0.38); color:#4a6a9e; }
+.btn-out.blue:hover { border-color:#4a90e2; }
+
+/* ═══════════════════════════════════════════
+   QUICK INFO STRIP (below hero)
+═══════════════════════════════════════════ */
+.info-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.2rem;
+  margin-top: 2rem;
+}
+.info-card {
+  background: rgba(255,255,255,0.42);
+  backdrop-filter: blur(10px);
+  border: 1.5px solid rgba(255,255,255,0.65);
+  border-radius: 1.3rem;
+  padding: 1.4rem 1.5rem;
+  display: flex; align-items: flex-start; gap: 1rem;
+  transition: all 0.3s;
+  cursor: default;
+}
+.info-card:hover { background:rgba(255,255,255,0.65); transform:translateY(-4px); box-shadow:0 10px 28px rgba(232,107,156,0.14); }
+.info-card-icon {
+  width: 48px; height: 48px; border-radius: 12px; flex-shrink: 0;
+  background: linear-gradient(135deg,rgba(232,107,156,0.18),rgba(74,144,226,0.18));
+  display: flex; align-items: center; justify-content: center;
+}
+.info-card-icon i {
+  font-size: 1.3rem;
+  background: linear-gradient(135deg,#e86b9c,#4a90e2);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.info-card-body h4 { font-size:0.88rem; font-weight:700; color:#b84a72; margin-bottom:0.2rem; }
+.info-card-body p  { font-size:0.78rem; color:#5a3a4a; line-height:1.5; }
+
+/* ═══════════════════════════════════════════
+   FEATURED SKILLS STRIP
+═══════════════════════════════════════════ */
+.skills-strip-title {
+  font-size:1rem; font-weight:700;
+  background: linear-gradient(135deg,#e86b9c,#4a90e2);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  margin-bottom:1rem;
+  display:flex; align-items:center; gap:0.5rem;
+}
+.skills-strip {
+  display: flex; flex-wrap: wrap; gap: 0.7rem;
+}
+.skill-chip {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  background: rgba(255,255,255,0.52);
+  backdrop-filter: blur(6px);
+  border: 1.5px solid rgba(255,255,255,0.7);
+  padding: 0.5rem 1.1rem; border-radius: 30px;
+  font-size: 0.82rem; font-weight: 600; color: #5a3a4a;
+  transition: all 0.25s;
+}
+.skill-chip i { color: #e86b9c; font-size: 0.9rem; }
+.skill-chip:hover { background:rgba(255,255,255,0.82); transform:translateY(-2px) scale(1.03); }
+
+/* ═══════════════════════════════════════════
+   SECTION CARDS
+═══════════════════════════════════════════ */
+.section-sub { font-size:0.9rem; font-weight:700; text-transform:uppercase; letter-spacing:2px; color:#e86b9c; margin-bottom:0.4rem; }
+
+/* divider */
+.wave-divider {
+  display:flex; align-items:center; gap:1rem;
+  margin:2rem 0 1.5rem;
+}
+.wave-line {
+  flex:1; height:2px;
+  background:linear-gradient(90deg,transparent,rgba(232,107,156,0.5),rgba(74,144,226,0.5),transparent);
+  border-radius:4px; overflow:hidden; position:relative;
+}
+.wave-line::after {
+  content:''; position:absolute; top:0; left:-100%; width:60%; height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.8),transparent);
+  animation:shimmer 2.8s linear infinite;
+}
+@keyframes shimmer { to { left:200%; } }
+.wave-icon {
+  font-size:1.1rem;
+  background:linear-gradient(135deg,#e86b9c,#4a90e2);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 960px) {
+  .hero-layout { gap:2.5rem; justify-content:center; text-align:center; }
+  .text-col { align-items:center; }
+  .role-chips,.cta-group,.stats-grid,.socials { justify-content:center; }
+  .hero-bio { text-align:center; }
+  .greet-badge { margin:0 auto; }
+}
+@media (max-width: 540px) {
+  .glow-frame { width:240px; height:240px; }
+  .photo-circle { width:224px; height:224px; }
+  .hero-section { padding:2rem 1.2rem; }
+  .hero-name-text { font-size:1.85rem; min-height:65px; }
+  .info-strip { grid-template-columns:1fr; }
+}
+  </style>
+</head>
+<body>
+
+<div class="animated-bg"></div>
+<div class="hearts-container" id="hearts-container"></div>
+
+<!-- Photo popup overlay -->
+<div id="photoPopup" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.7);backdrop-filter:blur(10px);align-items:center;justify-content:center;cursor:zoom-out;" onclick="this.style.display='none';document.body.style.overflow=''">
+  <img id="photoPopupImg" src="" alt="" style="max-width:88vw;max-height:88vh;border-radius:1.5rem;box-shadow:0 20px 60px rgba(0,0,0,0.5);animation:popIn 0.3s ease;">
+</div>
+
+<nav class="navbar">
+  <a href="index.html" class="logo">✨ FerissaSpace</a>
+  <ul class="nav-menu">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="skills.html">Skills</a></li>
+    <li><a href="portofolio.html">Portfolio</a></li>
+    <li><a href="cv.html">CV</a></li>
+  </ul>
+  <div class="menu-toggle"><i class="fas fa-bars"></i></div>
+</nav>
+<main class="container">
+
+  <!-- ═══════ HERO CARD ═══════ -->
+  <section class="section-card hero-section">
+
+    <!-- bg blobs -->
+    <div class="blob" style="width:380px;height:380px;background:#e86b9c;top:-120px;right:-100px;"></div>
+    <div class="blob" style="width:300px;height:300px;background:#4a90e2;bottom:-80px;left:-70px;animation-delay:3s;"></div>
+    <div class="blob" style="width:200px;height:200px;background:#c47be8;top:35%;left:38%;animation-delay:1.5s;"></div>
+
+    <div class="hero-layout">
+
+      <!-- ── Photo ── -->
+      <div class="photo-col">
+        <div class="glow-frame">
+          <div class="spin-ring"></div>
+          <div class="spin-ring2"></div>
+          <span class="sp"></span><span class="sp"></span>
+          <span class="sp"></span><span class="sp"></span>
+          <span class="sp"></span><span class="sp"></span>
+          <div class="photo-circle" id="heroPic" title="Klik untuk perbesar">
+            <img src="foto1.jpeg" alt="Ferissa"
+                 onerror="this.src='https://randomuser.me/api/portraits/women/68.jpg'">
+          </div>
+        </div>
+
+        <div class="status-pill">
+          <span class="status-dot"></span>
+          Available for Projects
+        </div>
+
+        <div class="socials">
+  <a href="https://github.com/chochochips298" class="soc-btn" title="GitHub"><i class="fab fa-github"></i></a>
+
+  <a href="https://www.instagram.com/_justccaa?igsh=MTJnZzBqZzl2eTkxMw==" class="soc-btn" title="Instagram"><i class="fab fa-instagram"></i></a>
+
+  <a href="https://www.linkedin.com/in/ferissa-ilen-aswa-aulia-2b4b073a4?utm_source=share_via&utm_content=profile&utm_medium=member_android" class="soc-btn" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+
+ <a href="https://mail.google.com/mail/?view=cm&fs=1&to=ferisailen1@gmail.com"
+class="soc-btn"
+title="Email">
+<i class="fas fa-envelope"></i>
+</a>
+
+<a href="https://wa.me/6285876745759"
+class="soc-btn"
+title="WhatsApp">
+<i class="fab fa-whatsapp"></i>
+</a>
+</div>
+</div>
+
+      <!-- ── Text ── -->
+      <div class="text-col">
+        <div class="greet-badge"><h1>&nbsp;🤍Hai, I'm🤍&nbsp;</h1></div>
+
+        <div class="hero-name-text" id="typingName"></div>
+
+        <div class="role-chips">
+          <span class="chip"><i class="fas fa-code"></i> Web Developer</span>
+          <span class="chip"><i class="fas fa-palette"></i> UI/UX Enthusiast</span>
+          <span class="chip"><i class="fas fa-heart"></i> Dipanggil Caca</span>
+          <span class="chip"><i class="fas fa-map-marker-alt"></i> Semarang</span>
+        </div>
+
+        <div class="hero-bio" id="typingAbout"></div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-num">2<span style="font-size:1.3rem"></span></div>
+            <div class="stat-lbl">Project Web</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">10<span style="font-size:1.3rem">+</span></div>
+            <div class="stat-lbl">Sertifikat</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">3</div>
+            <div class="stat-lbl">Prestasi</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">1<span style="font-size:1.3rem">th</span></div>
+            <div class="stat-lbl">Pengalaman</div>
+          </div>
+        </div>
+
+        <div class="cta-group">
+          <a href="portofolio.html" class="btn-main"><i class="fas fa-briefcase"></i> Lihat Portofolio</a>
+          <a href="about.html"     class="btn-out"><i class="fas fa-user-astronaut"></i> Tentang Saya</a>
+          <a href="cv.html"        class="btn-out blue"><i class="fas fa-file-alt"></i> CV</a>
+        </div>
+      </div>
+
+    </div><!-- /hero-layout -->
+
+    <!-- ─ Quick Info Strip ─ -->
+    <div class="wave-divider" style="margin-top:3rem;">
+      <div class="wave-line"></div>
+      <span class="wave-icon">✦✦</span>
+      <div class="wave-line"></div>
+    </div>
+
+    <div class="info-strip">
+      <div class="info-card">
+        <div class="info-card-icon"><i class="fas fa-graduation-cap"></i></div>
+        <div class="info-card-body">
+          <h4>Pendidikan</h4>
+          <p>>SDN Sidomulyo 03<br>>SMPN 2 Ungaran<br>>SMKN 7 Semarang-sekarang<br></p>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-icon"><i class="fas fa-briefcase"></i></div>
+        <div class="info-card-body">
+          <h4>Pengalaman</h4>
+          <p>>Project Pixel Vanguard<br>>Project Dicoding</p>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-icon"><i class="fas fa-trophy"></i></div>
+        <div class="info-card-body">
+          <h4>Prestasi</h4>
+          <p>>Juara 1 Lomba Menyanyi Islami<br>>Juara 1 Lomba Menyanyi FLS2N</p>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-icon"><i class="fas fa-envelope"></i></div>
+        <div class="info-card-body">
+          <h4>Kontak</h4>
+          <p>ferisailen1@gmail.com<br>+62 858 7674 5759</p>
+        </div>
+      </div>
+    </div><div class="wave-divider" style="margin-top:3rem;">
+      <div class="wave-line"></div>
+      <span class="wave-icon">✦✦</span>
+      <div class="wave-line"></div>
+    </div>
+
+  </section><!-- /hero -->
+
+
+</main>
+
+<footer>
+  <p><i class="fas fa-heart" style="color:#e86b9c;"></i> Personal Branding | Ferissa Ilen Aswa Aulia | 2026</p>
+</footer>
+
+<script src="main.js"></script>
+<script>
+  // Photo click → popup
+  document.getElementById('heroPic').addEventListener('click', () => {
+    const popup = document.getElementById('photoPopup');
+    const img   = document.getElementById('photoPopupImg');
+    img.src = document.querySelector('#heroPic img').src;
+    popup.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.getElementById('photoPopup').style.display = 'none';
+      document.body.style.overflow = '';
+    }
+  });
+</script>
+</body>
+</html>

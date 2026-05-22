@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio | FerissaSpace</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<script>
+// Fix untuk memastikan modal berfungsi
+function openModal(data) {
+  const modal = document.getElementById('modalOverlay');
+  if (!modal) return;
+  document.getElementById('modalImg').src = data.img || '';
+  document.getElementById('modalTitle').innerHTML = data.title || '';
+  document.getElementById('modalDesc').innerHTML = data.desc || '';
+  
+  const tagsEl = document.getElementById('modalTags');
+  tagsEl.innerHTML = '';
+  if (data.tags) {
+    data.tags.forEach(tag => {
+      const span = document.createElement('span');
+      span.className = 'modal-tag';
+      span.innerHTML = tag;
+      tagsEl.appendChild(span);
+    });
+  }
+  
+  const actionsEl = document.getElementById('modalActions');
+  actionsEl.innerHTML = '';
+  if (data.actions) {
+    data.actions.forEach(action => {
+      const btn = document.createElement('a');
+      btn.className = action.cls || 'btn-view';
+      btn.innerHTML = `<i class="${action.icon}"></i> ${action.label}`;
+      btn.href = action.href || '#';
+      if (action.href && action.href !== '#') btn.target = '_blank';
+      btn.onclick = function(e) { e.stopPropagation(); };
+      actionsEl.appendChild(btn);
+    });
+  }
+  
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+// Close modal
+document.getElementById('modalClose')?.addEventListener('click', function() {
+  document.getElementById('modalOverlay').style.display = 'none';
+  document.body.style.overflow = '';
+});
+document.getElementById('modalOverlay')?.addEventListener('click', function(e) {
+  if (e.target === this) {
+    this.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+});
+
+// Pagination certificates
+let certPage = 0;
+const certsPerPage = 6;
+const certItems = document.querySelectorAll('.cert-item');
+const totalCerts = certItems.length;
+const totalPages = Math.ceil(totalCerts / certsPerPage);
+
+function showCertPage(page) {
+  certItems.forEach((item, index) => {
+    item.style.display = (index >= page * certsPerPage && index < (page + 1) * certsPerPage) ? '' : 'none';
+  });
+  document.getElementById('certPageInfo').innerHTML = `Halaman ${page + 1} / ${totalPages}`;
+  document.getElementById('certPrev').disabled = page === 0;
+  document.getElementById('certNext').disabled = page === totalPages - 1;
+}
+
+document.getElementById('certPrev')?.addEventListener('click', () => {
+  if (certPage > 0) { certPage--; showCertPage(certPage); }
+});
+document.getElementById('certNext')?.addEventListener('click', () => {
+  if (certPage < totalPages - 1) { certPage++; showCertPage(certPage); }
+});
+
+showCertPage(0);
+</script>
+<script>
+function openImage(src) {
+  const modal = document.getElementById("imageModal");
+  const img = document.getElementById("modalImage");
+
+  img.src = src;
+  modal.style.display = "flex";
+
+  document.body.style.overflow = "hidden";
+}
+
+function closeImage() {
+  document.getElementById("imageModal").style.display = "none";
+
+  document.body.style.overflow = "auto";
+}
+</script>
+<body>
+
+  <div class="animated-bg"></div>
+  <div class="hearts-container" id="hearts-container"></div>
+
+
+  <!-- POPUP MODAL -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-box">
+      <button class="modal-close" id="modalClose">&times;</button>
+      <img class="modal-img" id="modalImg" src="" alt="">
+      <div class="modal-title" id="modalTitle"></div>
+      <div class="modal-tags" id="modalTags"></div>
+      <div class="modal-desc" id="modalDesc"></div>
+      <div class="modal-actions" id="modalActions"></div>
+    </div>
+  </div>
+
+  <nav class="navbar">
+    <a href="index.html" class="logo">✨ FerissaSpace</a>
+    <ul class="nav-menu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="skills.html">Skills</a></li>
+      <li><a href="portfolio.html">Portofolio</a></li>
+      <li><a href="cv.html">CV</a></li>
+    </ul>
+    <div class="menu-toggle"><i class="fas fa-bars"></i></div>
+  </nav>
+
+  <main class="container">
+    <section id="portfolio" class="section-card">
+      <h2 class="section-title"><i class="fas fa-briefcase"></i> Portfolio</h2>
+
+      <!-- ══ PROJECTS ══ -->
+      <div class="portfolio-category">
+        <div class="category-header">
+          <i class="fas fa-code"></i>
+          <h3>📁 Projects</h3>
+        </div>
+        <div class="portfolio-grid">
+
+          <div class="portfolio-item" onclick="openModal({
+            img:'foto2.png',
+            title:'Pixel Vanguard',
+            tags:['HTML','CSS','JavaScript','Responsive'],
+            desc:'Website modern bertema teknologi dengan tampilan aesthetic, responsive, dan animasi halus. Dibuat dengan penuh perhatian terhadap detail visual dan performa.',
+            actions:[{label:'Live Demo',cls:'btn-demo',icon:'fas fa-external-link-alt',href:'https://pixel-vanguard-eosin.vercel.app'}]
+          })">
+            <div class="portfolio-img-wrapper">
+              <img src="foto2.png" alt="Pixel Vanguard" class="portfolio-img"
+                   onerror="this.src='https://placehold.co/600x400/f0d5e8/b84a72?text=Pixel+Vanguard'">
+            </div>
+            <div class="portfolio-info">
+              <h4>Pixel Vanguard</h4>
+              <p>Website modern bertema teknologi dengan tampilan aesthetic, responsive, dan animasi halus.</p>
+              <div class="btn-group">
+                <span class="btn-view"><i class="fas fa-eye"></i> Preview</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="portfolio-item" onclick="openModal({
+            img:'foto3.png',
+            title:'MindPace',
+            tags:['HTML','CSS','JavaScript','Productivity'],
+            desc:'Website produktivitas dan fokus dengan desain clean, interaktif, dan fitur manajemen waktu. Cocok untuk pelajar dan pekerja yang butuh fokus optimal.',
+            actions:[{label:'Live Demo',cls:'btn-demo',icon:'fas fa-external-link-alt',href:'https://mindpace-ruddy.vercel.app/'}]
+          })">
+            <div class="portfolio-img-wrapper">
+              <img src="foto3.png" alt="MindPace" class="portfolio-img"
+                   onerror="this.src='https://placehold.co/600x400/d5e8f0/4a90e2?text=MindPace'">
+            </div>
+            <div class="portfolio-info">
+              <h4>MindPace</h4>
+              <p>Website produktivitas dan fokus dengan desain clean, interaktif, dan fitur manajemen waktu.</p>
+              <div class="btn-group">
+                <span class="btn-view"><i class="fas fa-eye"></i> Preview</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ══ DESIGN ══ -->
+      <div class="portfolio-category">
+        <div class="category-header">
+          <i class="fas fa-palette"></i>
+          <h3>🎨 Design</h3>
+        </div>
+        <div class="design-scroll">
+
+          <div class="portfolio-item" onclick="openModal({
+            img:'canva1.png',
+            title:'TaskFlow UI/UX',
+            tags:['Figma','UI/UX','Prototype'],
+            desc:'High-fidelity prototype di Figma untuk aplikasi manajemen tugas. Dirancang dengan prinsip usability dan estetika modern.',
+            actions:[{label:'View Design',cls:'btn-view',icon:'fas fa-eye',href:'canva1.png'}]
+          })">
+            <div class="portfolio-img-wrapper">
+              <img src="canva1.png" alt="TaskFlow UI/UX" class="portfolio-img"
+                   onerror="this.src='https://placehold.co/600x400/f0d5e8/a855f7?text=TaskFlow'">
+            </div>
+            <div class="portfolio-info">
+              <h4>7 Kebiasaan Anak Indonesia Hebat</h4>
+              <p>Poster yang mengajak untuk selalu hidup sehat.</p>
+              <div class="btn-group"><span class="btn-view"><i class="fas fa-eye"></i> Preview</span></div>
+            </div>
+          </div>
+
+          <div class="portfolio-item" onclick="openModal({
+            img:'canva2.png',
+            title:'Poster Digital Campaign',
+            tags:['Canva','Poster','Literasi Digital'],
+            desc:'Desain poster literasi digital yang memenangkan juara favorit. Mengedepankan tipografi bold dan palet warna yang mencolok.',
+            actions:[{label:'View',cls:'btn-view',icon:'fas fa-eye',href:'canva2.png'}]
+          })">
+            <div class="portfolio-img-wrapper">
+              <img src="canva2.png" alt="Poster Campaign" class="portfolio-img"
+                   onerror="this.src='https://placehold.co/600x400/d5e8f0/4a90e2?text=Poster'">
+            </div>
+            <div class="portfolio-info">
+              <h4>School Sedule</h4>
+              <p>Desain template jadwal sekolah yang bisa digunakan.</p>
+              <div class="btn-group"><span class="btn-view"><i class="fas fa-eye"></i> Preview</span></div>
+            </div>
+          </div>
+
+          <div class="portfolio-item" onclick="openModal({
+            img:'canva3.png',
+            title:'Mobile App UI Kit',
+            tags:['Figma','UI Kit','Soft Pink & Blue'],
+            desc:'UI Kit tema soft pink & blue aesthetic modern. Terdiri dari komponen reusable untuk pengembangan aplikasi mobile.',
+            actions:[{label:'View',cls:'btn-view',icon:'fas fa-eye',href:'canva3.png'}]
+          })">
+            <div class="portfolio-img-wrapper">
+              <img src="canva3.png" alt="Mobile UI Kit" class="portfolio-img"
+                   onerror="this.src='https://placehold.co/600x400/e8d5f0/a855f7?text=UI+Kit'">
+            </div>
+            <div class="portfolio-info">
+              <h4>Poster Cyberbullying</h4>
+              <p>Poster yang mengajak untuk tidak membully.</p>
+              <div class="btn-group"><span class="btn-view"><i class="fas fa-eye"></i> Preview</span></div>
+            </div>
+          </div>
+
+          <div class="portfolio-item" onclick="openModal({
+            img:'canva4.jpg',
+            title:'Dashboard Design',
+            tags:['Figma','Dashboard','Clean UI'],
+            desc:'Dashboard modern dengan tampilan clean dan responsive. Cocok untuk aplikasi analitik dan manajemen data.',
+            actions:[{label:'View',cls:'btn-view',icon:'fas fa-eye',href:'canva4.jpg'}]
+          })">
+            <div class="portfolio-img-wrapper">
+              <img src="canva5.png" alt="Dashboard Design" class="portfolio-img"
+                   onerror="this.src='https://placehold.co/600x400/e8e0d5/f59e0b?text=Dashboard'">
+            </div>
+            <div class="portfolio-info">
+              <h4>Poster Agama</h4>
+              <p>Poster Agama menjelaskan tentang salah satu Surah.</p>
+              <div class="btn-group"><span class="btn-view"><i class="fas fa-eye"></i> Preview</span></div>
+            </div>
+          </div>
+
+          <div class="portfolio-item" onclick="openModal({
+            img:'canva5.png',
+            title:'Creative Landing Page',
+            tags:['HTML','CSS','Animation','Smooth Scroll'],
+            desc:'Landing page aesthetic dengan animasi smooth scrolling. Didesain untuk menampilkan produk kreatif dengan visual yang memukau.',
+            actions:[{label:'View',cls:'btn-view',icon:'fas fa-eye',href:'canva5.png'}]
+          })">
+            <div class="portfolio-img-wrapper">
+              <img src="canva4.jpg" alt="Landing Page" class="portfolio-img"
+                   onerror="this.src='https://placehold.co/600x400/d5e8d0/4aae77?text=Landing+Page'">
+            </div>
+            <div class="portfolio-info">
+              <h4>Sungai Kehidupan</h4>
+              <p>Sungai ini menjelaskan kehidupan tentang saya.</p>
+              <div class="btn-group"><span class="btn-view"><i class="fas fa-eye"></i> Preview</span></div>
+            </div>
+          </div>
+
+          <div class="portfolio-item" onclick="openModal({
+            img:'canva6.jpeg',
+            title:'Social Media Design',
+            tags:['Canva','Instagram','Pastel Branding'],
+            desc:'Feed Instagram aesthetic dengan branding pastel modern. Menciptakan identitas visual yang konsisten dan eye-catching di media sosial.',
+            actions:[{label:'View',cls:'btn-view',icon:'fas fa-eye',href:'canva6.jpeg'}]
+          })">
+            <div class="portfolio-img-wrapper">
+              <img src="canva6.jpeg" alt="Social Media Design" class="portfolio-img"
+                   onerror="this.src='https://placehold.co/600x400/f5e0c0/fbbf24?text=Social+Media'">
+            </div>
+            <div class="portfolio-info">
+              <h4>PPKN Design</h4>
+              <p>Design ini menjelaskan tentang perjuangan pahlawan.</p>
+              <div class="btn-group"><span class="btn-view"><i class="fas fa-eye"></i> Preview</span></div>
+            </div>
+          </div>
+
+          <div class="portfolio-item" onclick="openModal({
+            img:'canva7.png',
+            title:'Branding Kit',
+            tags:['Canva','Branding','Visual Identity'],
+            desc:'Visual identity dan brand guideline untuk startup digital. Mencakup logo, palet warna, tipografi, dan panduan penggunaan brand.',
+            actions:[{label:'View',cls:'btn-view',icon:'fas fa-eye',href:'canva7.png'}]
+          })">
+            <div class="portfolio-img-wrapper">
+              <img src="canva7.png" alt="Branding Kit" class="portfolio-img"
+                   onerror="this.src='https://placehold.co/600x400/e0d5f0/a855f7?text=Branding+Kit'">
+            </div>
+            <div class="portfolio-info">
+              <h4>Branding Kit</h4>
+              <p>Visual identity dan brand guideline untuk menjual produk digital.</p>
+              <div class="btn-group"><span class="btn-view"><i class="fas fa-eye"></i> Preview</span></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+  <!-- CERTIFICATES -->
+<div class="portfolio-category">
+
+  <div class="category-header">
+    <i class="fas fa-certificate"></i>
+    <h3>🏆 Certificates</h3>
+  </div>
+
+  <!-- GRID -->
+  <div class="cert-grid" id="certGrid">
+
+    <!-- CERT 1 -->
+    <div class="cert-item">
+      <img src="Dicoding1.png" alt="" class="cert-img">
+      <div class="cert-info">
+        <h4>Web Development Bootcamp</h4>
+        <p>Pelatihan intensif HTML, CSS, JavaScript dari Dicoding.</p>
+      </div>
+    </div>
+
+    <!-- CERT 2 -->
+    <div class="cert-item">
+      <img src="Dicoding2.png" alt="" class="cert-img">
+      <div class="cert-info">
+        <h4>Fundamental Programming</h4>
+        <p>Menyelesaikan dasar pemrograman dan logika coding.</p>
+      </div>
+    </div>
+
+    <!-- CERT 3 -->
+    <div class="cert-item">
+      <img src="Dicoding3.png" alt="" class="cert-img">
+      <div class="cert-info">
+        <h4>Web Development Basics</h4>
+        <p>Mempelajari HTML, CSS, dan JavaScript dasar.</p>
+      </div>
+    </div>
+
+    <!-- CERT 4 -->
+    <div class="cert-item">
+      <img src="Dicoding4.png" alt="" class="cert-img">
+      <div class="cert-info">
+        <h4>Introduction to Programming</h4>
+        <p>Belajar konsep dasar logika pemrograman.</p>
+      </div>
+    </div>
+
+    <!-- CERT 5 -->
+    <div class="cert-item">
+      <img src="Dicoding5.png" alt="" class="cert-img">
+      <div class="cert-info">
+        <h4>Front-End Web Development</h4>
+        <p>Membuat website responsif dan modern.</p>
+      </div>
+    </div>
+
+    <!-- CERT 6 -->
+    <div class="cert-item">
+      <img src="ser ing.png" alt="" class="cert-img">
+      <div class="cert-info">
+        <h4>English Certificate</h4>
+        <p>Dasar komunikasi menggunakan bahasa Inggris.</p>
+      </div>
+    </div>
+
+    <!-- CERT 7 -->
+    <div class="cert-item">
+      <img src="Dicoding1.png" alt="" class="cert-img">
+      <div class="cert-info">
+        <h4>Cloud Practitioner</h4>
+        <p>Pengenalan cloud computing AWS.</p>
+      </div>
+    </div>
+
+    <!-- CERT 8 -->
+    <div class="cert-item">
+      <img src="Dicoding3.png" alt="" class="cert-img">
+      <div class="cert-info">
+        <h4>JavaScript Essentials</h4>
+        <p>Belajar JavaScript untuk website interaktif.</p>
+      </div>
+    </div>
+
+    <!-- CERT 9 -->
+    <div class="cert-item">
+      <img src="Dicoding4.png" alt="" class="cert-img">
+      <div class="cert-info">
+        <h4>React JS Dasar</h4>
+        <p>Pengenalan React JS dan komponen modern.</p>
+      </div>
+    </div>
+
+    <!-- CERT 10 -->
+    <div class="cert-item">
+      <img src="Dicoding5.png" alt="" class="cert-img">
+      <div class="cert-info">
+        <h4>Basic UI/UX Design</h4>
+        <p>Belajar desain UI/UX modern dan sederhana.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CERTIFICATES -->
+<div class="portfolio-category">
+
+  <div class="category-header">
+    <i class="fas fa-certificate"></i>
+    <h3>🏆 AWARDS</h3>
+  </div>
+
+
+    <!-- AWARDS -->
+<div class="portfolio-grid">
+
+  <!-- AWARD 1 -->
+  <div class="portfolio-item" onclick="openImage('Lomba1.jpeg')">
+    <img src="Lomba1.jpeg" alt="" class="portfolio-img">
+
+    <div class="portfolio-info">
+      <h4>Lomba Menyanyi</h4>
+      <p>Juara 3 Lomba Menyanyi Umum.</p>
+    </div>
+  </div>
+
+  <!-- AWARD 2 -->
+  <div class="portfolio-item" onclick="openImage('lomba2.jpeg')">
+    <img src="prov.jpeg" alt="" class="portfolio-img">
+
+    <div class="portfolio-info">
+      <h4>Lomba Menyanyi FLS2N Tingkat Provinsi</h4>
+      <p>Lomba Menyanyi Tingkat Provinsi.</p>
+    </div>
+  </div>
+
+  <!-- AWARD 3 -->
+  <div class="portfolio-item" onclick="openImage('lomba3.jpeg')">
+    <img src="lomba3.jpeg" alt="" class="portfolio-img">
+
+    <div class="portfolio-info">
+      <h4>Lomba Menyanyi FLS2N Tingkat Kabupaten</h4>
+      <p>Juara 1 Lomba Menyanyi Tingkat Kabupaten.</p>
+    </div>
+  </div>
+
+  <!-- AWARD 4 -->
+  <div class="portfolio-item" onclick="openImage('lomba4.jpeg')">
+    <img src="lomba4.jpeg" alt="" class="portfolio-img">
+
+    <div class="portfolio-info">
+      <h4>Lomba Menyanyi Islami</h4>
+      <p>Juara 1 Lomba Menyanyi Islami.</p>
+    </div>
+  </div>
+
+  <!-- AWARD 5 -->
+  <div class="portfolio-item" onclick="openImage('lomba5.jpeg')">
+    <img src="lomba5.jpeg" alt="" class="portfolio-img">
+
+    <div class="portfolio-info">
+      <h4>Lomba Paduan Suara</h4>
+      <p>Mendapatkan Medali Perak Kategori Umum.</p>
+    </div>
+  </div>
+
+  <!-- AWARD 6 -->
+  <div class="portfolio-item" onclick="openImage('foto6.jpeg')">
+    <img src="foto6.jpeg" alt="" class="portfolio-img">
+
+    <div class="portfolio-info">
+      <h4>Lomba Paduan Suara</h4>
+      <p>Mendapatkan Medali Perak Kategori Umum.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- IMAGE MODAL -->
+<div class="image-modal" id="imageModal">
+  <span class="close-modal" onclick="closeImage()">&times;</span>
+
+  <img id="modalImage" class="modal-image">
+</div>
+
+</body>
+</html>
