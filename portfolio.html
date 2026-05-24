@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio | FerissaSpace</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <style>
+
+/* ══ UNIFIED FULLSCREEN POPUP ══ */
+#uniPopup {
+  display: none;
+  position: fixed; inset: 0; z-index: 999999;
+  background: rgba(0,0,0,.82);
+  backdrop-filter: blur(12px);
+  align-items: center; justify-content: center;
+  padding: 1rem;
+  flex-direction: column; gap: 1rem;
+}
+#uniPopup.open { display: flex; }
+
+/* close button — always on top */
+#uniClose {
+  position: fixed; top: 1.2rem; right: 1.5rem;
+  width: 46px; height: 46px;
+  background: rgba(255,255,255,.18);
+  border: 2px solid rgba(255,255,255,.45);
+  border-radius: 50%;
+  font-size: 1.6rem; color: white; font-weight: 700;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: all .25s; z-index: 1000000;
+  font-family: 'Poppins', sans-serif; line-height: 1;
+}
+#uniClose:hover { background: #e86b9c; border-color: #e86b9c; transform: rotate(90deg) scale(1.1); }
+
+/* image mode */
+#uniPopup .uni-img {
+  max-width: 90vw; max-height: 82vh;
+  border-radius: 1.2rem;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  object-fit: contain;
+  display: block;
+  animation: popIn .3s ease;
+}
+/* caption below image */
+#uniCaption {
+  background: rgba(255,245,250,.92);
+  backdrop-filter: blur(8px);
+  padding: .45rem 1.5rem;
+  border-radius: 30px;
+  font-size: .92rem; font-weight: 600; color: #b84a72;
+  animation: popIn .3s ease;
+}
+
+/* card mode (for portfolio project/design modals) */
+#uniCard {
+  background: rgba(255,248,252,.97);
+  border-radius: 1.6rem;
+  max-width: 660px; width: 100%;
+  max-height: 88vh; overflow-y: auto;
+  padding: 2rem 2rem 1.8rem;
+  box-shadow: 0 20px 60px rgba(0,0,0,.35);
+  border: 1px solid rgba(255,255,255,.7);
+  animation: popIn .3s ease;
+  position: relative;
+}
+#uniCard .uc-img {
+  width: 100%; border-radius: 1rem;
+  max-height: 320px; object-fit: cover;
+  margin-bottom: 1.2rem;
+  box-shadow: 0 6px 20px rgba(0,0,0,.1);
+  display: block;
+}
+#uniCard .uc-title { font-size: 1.5rem; font-weight: 800; color: #b84a72; margin-bottom: .5rem; }
+#uniCard .uc-tags { display: flex; flex-wrap: wrap; gap: .45rem; margin-bottom: .9rem; }
+#uniCard .uc-tag {
+  background: rgba(232,107,156,.12); border: 1px solid rgba(232,107,156,.3);
+  padding: .28rem .85rem; border-radius: 20px;
+  font-size: .75rem; font-weight: 600; color: #b84a72;
+}
+#uniCard .uc-desc { font-size: .92rem; color: #4a2a3a; line-height: 1.75; margin-bottom: 1.2rem; }
+#uniCard .uc-actions { display: flex; gap: .75rem; flex-wrap: wrap; }
+
+@keyframes popIn { from{transform:scale(.8);opacity:0} to{transform:scale(1);opacity:1} }
+
+/* ══ CERT ITEMS — clickable ══ */
+.cert-item {
+  cursor: pointer;
+}
+.cert-item:hover .cert-img { transform: scale(1.05); }
+
+/* cert drive link row */
+.cert-links {
+  display: flex; gap: .5rem; flex-wrap: wrap; margin-top: .8rem;
+}
+.cert-link {
+  display: inline-flex; align-items: center; gap: .38rem;
+  padding: .32rem .9rem; border-radius: 20px;
+  font-size: .72rem; font-weight: 700;
+  text-decoration: none; transition: all .25s;
+  font-family: 'Poppins', sans-serif;
+}
+.cert-link.view  { background: rgba(232,107,156,.12); border:1px solid rgba(232,107,156,.3); color:#b84a72; }
+.cert-link.drive { background: rgba(74,144,226,.12);  border:1px solid rgba(74,144,226,.3);  color:#4a6aaa; }
+.cert-link:hover { transform: translateY(-2px); opacity: .85; }
+
+/* ══ CATEGORY HEADER ══ */
+.category-header {
+  display: flex; align-items: center; gap: 1rem;
+  margin-bottom: 1.5rem; padding-bottom: .6rem;
+  border-bottom: 2px dashed rgba(232,107,156,.3);
+}
+.category-header h3 { font-size: 1.4rem; font-weight: 700; color: #b84a72; }
+.category-header > i {
+  font-size: 1.7rem;
+  background: linear-gradient(135deg,#e86b9c,#4a90e2);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+
+/* ══ CERT PAGINATION ══ */
+.cert-pagination {
+  display: flex; align-items: center; justify-content: center;
+  gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap;
+}
+.cert-page-btn {
+  display: inline-flex; align-items: center; gap: .4rem;
+  padding: .65rem 1.5rem; border-radius: 30px;
+  font-size: .88rem; font-weight: 700; cursor: pointer;
+  border: none; font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg,#e86b9c,#4a90e2);
+  color: white; transition: all .3s;
+}
+.cert-page-btn:disabled { opacity: .38; cursor: not-allowed; transform: none !important; }
+.cert-page-btn:not(:disabled):hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(232,107,156,.4); }
+.cert-page-info { font-size: .88rem; font-weight: 700; color: #b84a72; }
+
+/* ══ PORTFOLIO GRID / ITEMS ══ */
+.portfolio-category { margin-bottom: 2.8rem; }
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.6rem;
+}
+.portfolio-item {
+  background: rgba(255,255,255,.42); backdrop-filter: blur(8px);
+  border: 1.5px solid rgba(255,255,255,.65);
+  border-radius: 1.3rem; overflow: hidden;
+  transition: all .35s; cursor: pointer;
+  display: flex; flex-direction: column;
+}
+.portfolio-item:hover {
+  transform: translateY(-7px);
+  background: rgba(255,255,255,.62);
+  box-shadow: 0 14px 32px rgba(232,107,156,.18);
+}
+.portfolio-img-wrapper { overflow: hidden; height: 180px; flex-shrink: 0; }
+.portfolio-img {
+  width: 100%; height: 100%; object-fit: cover;
+  display: block; transition: transform .35s;
+}
+.portfolio-item:hover .portfolio-img { transform: scale(1.06); }
+.portfolio-info { padding: 1.2rem; flex: 1; display: flex; flex-direction: column; }
+.portfolio-info h4 { font-size: 1rem; font-weight: 700; color: #b84a72; margin-bottom: .4rem; }
+.portfolio-info p  { font-size: .83rem; color: #5a3a4a; line-height: 1.6; flex: 1; }
+.btn-group { display: flex; gap: .6rem; flex-wrap: wrap; margin-top: .9rem; }
+.btn-view, .btn-demo, .btn-award {
+  display: inline-flex; align-items: center; gap: .38rem;
+  padding: .42rem 1.1rem; border-radius: 24px;
+  font-size: .75rem; font-weight: 700;
+  text-decoration: none; transition: all .25s;
+  border: none; cursor: pointer; font-family: 'Poppins', sans-serif;
+}
+.btn-view  { background: rgba(74,144,226,.13); border: 1px solid rgba(74,144,226,.3); color: #4a6aaa; }
+.btn-demo  { background: linear-gradient(135deg,#e86b9c,#4a90e2); color: white; }
+.btn-award { background: linear-gradient(135deg,#fbbf24,#f59e0b); color: #78350f; }
+.btn-view:hover, .btn-demo:hover, .btn-award:hover { transform: translateY(-2px); opacity: .88; }
+
+/* design scroll */
+.design-scroll {
+  display: flex; gap: 1.5rem; overflow-x: auto;
+  padding-bottom: 1rem; scroll-behavior: smooth;
+}
+.design-scroll::-webkit-scrollbar { height: 8px; }
+.design-scroll::-webkit-scrollbar-thumb { background: linear-gradient(90deg,#e86b9c,#4a90e2); border-radius: 20px; }
+.design-scroll .portfolio-item { min-width: 290px; max-width: 290px; flex-shrink: 0; }
+
+/* cert grid */
+.cert-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.4rem; margin-bottom: 1rem;
+}
+.cert-item {
+  background: rgba(255,255,255,.45); backdrop-filter: blur(8px);
+  border: 1.5px solid rgba(255,255,255,.65);
+  border-radius: 1.3rem; overflow: hidden; transition: all .3s;
+}
+.cert-item:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(232,107,156,.15); }
+.cert-img-wrap { overflow: hidden; height: 155px; }
+.cert-img { width: 100%; height: 155px; object-fit: cover; display: block; transition: transform .35s; }
+.cert-item:hover .cert-img { transform: scale(1.05); }
+.cert-info { padding: 1rem 1.1rem 1.1rem; }
+.cert-info h4 { font-size: .9rem; font-weight: 700; color: #b84a72; margin-bottom: .25rem; }
+.cert-info p  { font-size: .78rem; color: #5a3a4a; line-height: 1.55; }
+
+/* awards grid — 3 per row */
+.awards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.6rem;
+}
+.award-item {
+  background: rgba(255,255,255,.42); backdrop-filter: blur(8px);
+  border: 1.5px solid rgba(255,255,255,.65);
+  border-radius: 1.3rem; overflow: hidden;
+  transition: all .35s; cursor: pointer;
+}
+.award-item:hover { transform: translateY(-7px); background: rgba(255,255,255,.62); box-shadow: 0 14px 32px rgba(232,107,156,.18); }
+.award-img-wrap { overflow: hidden; height: 200px; }
+.award-img { width: 100%; height: 200px; object-fit: cover; display: block; transition: transform .35s; }
+.award-item:hover .award-img { transform: scale(1.06); }
+.award-info { padding: 1.1rem 1.2rem; }
+.award-info h4 { font-size: 1rem; font-weight: 700; color: #b84a72; margin-bottom: .3rem; }
+.award-info p  { font-size: .83rem; color: #5a3a4a; line-height: 1.6; }
+
+/* ══ RESPONSIVE ══ */
+@media (max-width: 700px) {
+  .portfolio-grid, .awards-grid { grid-template-columns: 1fr; }
+  .cert-grid { grid-template-columns: 1fr 1fr; }
+  #uniCard { padding: 1.4rem; }
+  #uniCard .uc-img { max-height: 220px; }
+}
+@media (max-width: 420px) {
+  .cert-grid { grid-template-columns: 1fr; }
+  .design-scroll .portfolio-item { min-width: 250px; max-width: 250px; }
+}
+  </style>
+</head>
+<body>
+
+<div class="animated-bg"></div>
+<div class="hearts-container" id="hearts-container"></div>
+
+<!-- ════ UNIFIED POPUP ════ -->
+<div id="uniPopup">
+  <!-- close always visible -->
+  <button id="uniClose" title="Tutup (Esc)">&times;</button>
+
+  <!-- image-only mode -->
+  <img class="uni-img" id="uniImg" src="" alt="" style="display:none;">
+  <div id="uniCaption" style="display:none;"></div>
+
+  <!-- card mode (project/design detail) -->
+  <div id="uniCard" style="display:none;">
+    <img class="uc-img" id="ucImg" src="" alt="">
+    <div class="uc-title"  id="ucTitle"></div>
+    <div class="uc-tags"   id="ucTags"></div>
+    <div class="uc-desc"   id="ucDesc"></div>
+    <div class="uc-actions" id="ucActions"></div>
+  </div>
+</div>
+
+<nav class="navbar">
+  <a href="index.html" class="logo">✨ FerissaSpace</a>
+  <ul class="nav-menu">
+    <li><a href="index.html">Beranda</a></li>
+    <li><a href="about.html">Tentang Saya</a></li>
+    <li><a href="skills.html">Skill</a></li>
+    <li><a href="portfolio.html">Portfolio</a></li>
+    <li><a href="cv.html">CV</a></li>
+  </ul>
+  <div class="menu-toggle"><i class="fas fa-bars"></i></div>
+</nav>
+
+<main class="container">
+<section class="section-card">
+  <h2 class="section-title"><i class="fas fa-briefcase"></i> Portfolio</h2>
+
+  <!-- ══════════════════════════
+       PROJECTS
+  ══════════════════════════ -->
+  <div class="portfolio-category">
+    <div class="category-header">
+      <i class="fas fa-code"></i>
+      <h3>📁 Projects</h3>
+    </div>
+    <div class="portfolio-grid">
+
+      <div class="portfolio-item" onclick="openCard({
+        img:'foto2.png',
+        title:'Pixel Vanguard',
+        tags:['HTML','CSS','JavaScript','Responsive'],
+        desc:'Website modern bertema teknologi dengan tampilan aesthetic, responsive, dan animasi halus. Dibuat dengan penuh perhatian terhadap detail visual dan performa.',
+        actions:[{label:'Live Demo',cls:'btn-demo',icon:'fas fa-external-link-alt',href:'https://pixel-vanguard-eosin.vercel.app'}]
+      })">
+        <div class="portfolio-img-wrapper">
+          <img src="foto2.png" alt="Pixel Vanguard" class="portfolio-img"
+               onerror="this.src='https://placehold.co/600x400/f0d5e8/b84a72?text=Pixel+Vanguard'">
+        </div>
+        <div class="portfolio-info">
+          <h4>Pixel Vanguard</h4>
+          <p>Website modern bertema teknologi dengan tampilan aesthetic, responsive, dan animasi halus.</p>
+          <div class="btn-group"><span class="btn-view"><i class="fas fa-eye"></i> Preview</span></div>
+        </div>
+      </div>
+
+      <div class="portfolio-item" onclick="openCard({
+        img:'foto3.png',
+        title:'MindPace',
+        tags:['HTML','CSS','JavaScript','Productivity'],
+        desc:'Website produktivitas dan fokus dengan desain clean, interaktif, dan fitur manajemen waktu. Cocok untuk pelajar dan pekerja yang butuh fokus optimal.',
+        actions:[{label:'Live Demo',cls:'btn-demo',icon:'fas fa-external-link-alt',href:'https://mindpace-ruddy.vercel.app/'}]
+      })">
+        <div class="portfolio-img-wrapper">
+          <img src="foto3.png" alt="MindPace" class="portfolio-img"
+               onerror="this.src='https://placehold.co/600x400/d5e8f0/4a90e2?text=MindPace'">
+        </div>
+        <div class="portfolio-info">
+          <h4>MindPace</h4>
+          <p>Website produktivitas dan fokus dengan desain clean, interaktif, dan fitur manajemen waktu.</p>
+          <div class="btn-group"><span class="btn-view"><i class="fas fa-eye"></i> Preview</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════
+       DESIGN
+  ══════════════════════════ -->
+  <div class="portfolio-category">
+    <div class="category-header">
+      <i class="fas fa-palette"></i>
+      <h3>🎨 Design</h3>
+    </div>
+    <div class="design-scroll">
+
+      <div class="portfolio-item" onclick="openCard({
+        img:'canva1.png',
+        title:'7 Kebiasaan Anak Indonesia Hebat',
+        tags:['Canva','Poster','Kesehatan'],
+        desc:'Poster yang mengajak untuk selalu hidup sehat dengan 7 kebiasaan positif anak Indonesia hebat.',
+        actions:[{label:'Lihat Gambar',cls:'btn-view',icon:'fas fa-eye',href:'#',mode:'img'}]
+      })">
+        <div class="portfolio-img-wrapper">
+          <img src="canva1.png" alt="7 Kebiasaan" class="portfolio-img"
+               onerror="this.src='https://placehold.co/600x400/f0d5e8/a855f7?text=Kebiasaan'">
+        </div>
+        <div class="portfolio-info">
+          <h4>7 Kebiasaan Anak Indonesia Hebat</h4>
+          <p>Poster yang mengajak untuk selalu hidup sehat.</p>
+          <div class="btn-group"><span class="btn-view"><i class="fas fa-eye"></i> Preview</span></div>
+        </div>
+      </div>
+
+      <div class="portfolio-item" onclick="openCard({
+        img:'canva2.png',
+        title:'School Schedule',
+        tags:['Canva','Template','Jadwal'],
+        desc:'Desain template jadwal sekolah estetik yang bisa digunakan dan dikustomisasi sesuai kebutuhan.',
+        actions:[{label:'Lihat Gambar',cls:'btn-view',icon:'fas fa-eye',href:'#',mode:'img'}]
+      })">
+        <div class="portfolio-img-wrapper">
+          <img src="canva2.png" alt="School Schedule" class="portfolio-img"
+               onerror="this.src='https://placehold.co/600x400/d5e8f0/4a90e2?text=Schedule'">
+        </div>
+        <div class="portfolio-info">
+          <h4>School Schedule</h4>
+          <p>Desain template jadwal sekolah yang bisa digunakan.</p>
+          <div class="btn-group"><span class="btn-view"><i class="fas fa-eye"></i> Preview</span></div>
+        </div>
+      </div>
+
+      <div class="portfolio-item" onclick="openCard({
+        img:'canva3.png',
+        title:'Poster Cyberbullying',
+        tags:['Canva','Poster','Sosial'],
+        desc:'Poster kampanye anti-cyberbullying yang mengajak untuk tidak membully dan menciptakan lingkungan digital yang aman.',
+        actions:[{label:'Lihat Gambar',cls:'btn-view',icon:'fas fa-eye',href:'#',mode:'img'}]
+      })">
+        <div class="portfolio-img-wrapper">
+          <img src="canva3.png" alt="Poster Cyberbullying" class="portfolio-img"
+               onerror="this.src='https://placehold.co/600x400/e8d5f0/a855f7?text=Cyberbullying'">
+        </div>
+        <div class="portfolio-info">
+          <h4>Poster Cyberbullying</h4>
+          <p>Poster yang mengajak untuk tidak membully.</p>
+          <div class="btn-group"><span class="btn-view"><i class="fas fa-eye"></i> Preview</span></div>
+        </div>
+      </div>
+
+      <div class="portfolio-item" onclick="openCard({
+        img:'canva4.jpg',
+        title:'Poster Agama',
+        tags:['Canva','Poster','Agama'],
+        desc:'Poster agama yang menjelaskan tentang salah satu Surah dalam Al-Quran dengan desain yang estetik dan informatif.',
+        actions:[{label:'Lihat Gambar',cls:'btn-view',icon:'fas fa-eye',href:'#',mode:'img'}]
+      })">
+        <div class="portfolio-img-wrapper">
+          <img src="canva5.png" alt="Poster Agama" class="portfolio-img"
+               onerror="this.src='https://placehold.co/600x400/e8e0d5/f59e0b?text=Agama'">
+        </div>
+        <div class="portfolio-info">
+          <h4>Poster Agama</h4>
+          <p>Poster Agama menjelaskan tentang salah satu Surah.</p>
+          <div class="btn-group"><span class="btn-view"><i class="fas fa-eye"></i> Preview</span></div>
+        </div>
+      </div>
+
+      <div class="portfolio-item" onclick="openCard({
+        img:'canva5.png',
+        title:'Sungai Kehidupan',
+        tags:['Canva','Infografis','Personal'],
+        desc:'Desain infografis Sungai Kehidupan yang menceritakan perjalanan hidup secara visual dan penuh makna.',
+        actions:[{label:'Lihat Gambar',cls:'btn-view',icon:'fas fa-eye',href:'#',mode:'img'}]
+      })">
+        <div class="portfolio-img-wrapper">
+          <img src="canva4.jpg" alt="Sungai Kehidupan" class="portfolio-img"
+               onerror="this.src='https://placehold.co/600x400/d5e8d0/4aae77?text=Sungai'">
+        </div>
+        <div class="portfolio-info">
+          <h4>Sungai Kehidupan</h4>
+          <p>Sungai ini menjelaskan kehidupan tentang saya.</p>
+          <div class="btn-group"><span class="btn-view"><i class="fas fa-eye"></i> Preview</span></div>
+        </div>
+      </div>
+
+      <div class="portfolio-item" onclick="openCard({
+        img:'canva6.jpeg',
+        title:'PPKN Design',
+        tags:['Canva','Poster','Sejarah'],
+        desc:'Design poster PPKN yang menjelaskan tentang perjuangan pahlawan dengan visual yang kuat dan bersejarah.',
+        actions:[{label:'Lihat Gambar',cls:'btn-view',icon:'fas fa-eye',href:'#',mode:'img'}]
+      })">
+        <div class="portfolio-img-wrapper">
+          <img src="canva6.jpeg" alt="PPKN Design" class="portfolio-img"
+               onerror="this.src='https://placehold.co/600x400/f5e0c0/fbbf24?text=PPKN'">
+        </div>
+        <div class="portfolio-info">
+          <h4>PPKN Design</h4>
+          <p>Design ini menjelaskan tentang perjuangan pahlawan.</p>
+          <div class="btn-group"><span class="btn-view"><i class="fas fa-eye"></i> Preview</span></div>
+        </div>
+      </div>
+
+      <div class="portfolio-item" onclick="openCard({
+        img:'canva7.png',
+        title:'Branding Kit',
+        tags:['Canva','Branding','Visual Identity'],
+        desc:'Visual identity dan brand guideline untuk menjual produk digital. Mencakup logo, palet warna, dan tipografi.',
+        actions:[{label:'Lihat Gambar',cls:'btn-view',icon:'fas fa-eye',href:'#',mode:'img'}]
+      })">
+        <div class="portfolio-img-wrapper">
+          <img src="canva7.png" alt="Branding Kit" class="portfolio-img"
+               onerror="this.src='https://placehold.co/600x400/e0d5f0/a855f7?text=Branding'">
+        </div>
+        <div class="portfolio-info">
+          <h4>Branding Kit</h4>
+          <p>Visual identity dan brand guideline untuk menjual produk digital.</p>
+          <div class="btn-group"><span class="btn-view"><i class="fas fa-eye"></i> Preview</span></div>
+        </div>
+      </div>
+
+    </div><!-- /design-scroll -->
+  </div>
+
+  <!-- ══════════════════════════
+       CERTIFICATES
+  ══════════════════════════ -->
+  <div class="portfolio-category">
+    <div class="category-header">
+      <i class="fas fa-certificate"></i>
+      <h3>🏆 Certificates</h3>
+    </div>
+
+    <div class="cert-grid" id="certGrid">
+
+      <!-- CERT 1 -->
+      <div class="cert-item" onclick="openImg('Dicoding1.png','Web Development Bootcamp')">
+        <div class="cert-img-wrap">
+          <img src="Dicoding1.png" alt="Web Dev Bootcamp" class="cert-img"
+               onerror="this.src='https://placehold.co/600x380/f0d5e8/b84a72?text=Sertifikat'">
+        </div>
+        <div class="cert-info">
+          <h4>Web Development Bootcamp</h4>
+          <p>Pelatihan intensif HTML, CSS, JavaScript dari Dicoding.</p>
+          <div class="cert-links">
+            <span class="cert-link view" onclick="event.stopPropagation();openImg('Dicoding1.png','Web Development Bootcamp')"><i class="fas fa-eye"></i> Lihat</span>
+            <a class="cert-link drive" href="https://drive.google.com/drive/folders/1lqVbAI1_Y1VnaQqOD6qTIdKVmeWW-pHf?usp=sharing" target="_blank" onclick="event.stopPropagation()"><i class="fab fa-google-drive"></i> Drive</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- CERT 2 -->
+      <div class="cert-item" onclick="openImg('Dicoding2.png','Fundamental Programming')">
+        <div class="cert-img-wrap">
+          <img src="Dicoding2.png" alt="Fundamental Programming" class="cert-img"
+               onerror="this.src='https://placehold.co/600x380/d5e8f0/4a90e2?text=Sertifikat'">
+        </div>
+        <div class="cert-info">
+          <h4>Fundamental Programming</h4>
+          <p>Menyelesaikan dasar pemrograman dan logika coding.</p>
+          <div class="cert-links">
+            <span class="cert-link view" onclick="event.stopPropagation();openImg('Dicoding2.png','Fundamental Programming')"><i class="fas fa-eye"></i> Lihat</span>
+            <a class="cert-link drive" href="https://drive.google.com/drive/folders/1lqVbAI1_Y1VnaQqOD6qTIdKVmeWW-pHf?usp=sharing" target="_blank" onclick="event.stopPropagation()"><i class="fab fa-google-drive"></i> Drive</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- CERT 3 -->
+      <div class="cert-item" onclick="openImg('Dicoding3.png','Web Development Basics')">
+        <div class="cert-img-wrap">
+          <img src="Dicoding3.png" alt="Web Development Basics" class="cert-img"
+               onerror="this.src='https://placehold.co/600x380/e8d5f0/a855f7?text=Sertifikat'">
+        </div>
+        <div class="cert-info">
+          <h4>Web Development Basics</h4>
+          <p>Mempelajari HTML, CSS, dan JavaScript dasar.</p>
+          <div class="cert-links">
+            <span class="cert-link view" onclick="event.stopPropagation();openImg('Dicoding3.png','Web Development Basics')"><i class="fas fa-eye"></i> Lihat</span>
+            <a class="cert-link drive" href="https://drive.google.com/drive/folders/1lqVbAI1_Y1VnaQqOD6qTIdKVmeWW-pHf?usp=sharing" target="_blank" onclick="event.stopPropagation()"><i class="fab fa-google-drive"></i> Drive</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- CERT 4 -->
+      <div class="cert-item" onclick="openImg('Dicoding4.png','Introduction to Programming')">
+        <div class="cert-img-wrap">
+          <img src="Dicoding4.png" alt="Introduction to Programming" class="cert-img"
+               onerror="this.src='https://placehold.co/600x380/f5e0c0/fbbf24?text=Sertifikat'">
+        </div>
+        <div class="cert-info">
+          <h4>Introduction to Programming</h4>
+          <p>Belajar konsep dasar logika pemrograman.</p>
+          <div class="cert-links">
+            <span class="cert-link view" onclick="event.stopPropagation();openImg('Dicoding4.png','Introduction to Programming')"><i class="fas fa-eye"></i> Lihat</span>
+            <a class="cert-link drive" href="https://drive.google.com/drive/folders/1lqVbAI1_Y1VnaQqOD6qTIdKVmeWW-pHf?usp=sharing" target="_blank" onclick="event.stopPropagation()"><i class="fab fa-google-drive"></i> Drive</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- CERT 5 -->
+      <div class="cert-item" onclick="openImg('Dicoding5.png','Front-End Web Development')">
+        <div class="cert-img-wrap">
+          <img src="Dicoding5.png" alt="Front-End Web Development" class="cert-img"
+               onerror="this.src='https://placehold.co/600x380/d5f0e8/22c55e?text=Sertifikat'">
+        </div>
+        <div class="cert-info">
+          <h4>Front-End Web Development</h4>
+          <p>Membuat website responsif dan modern.</p>
+          <div class="cert-links">
+            <span class="cert-link view" onclick="event.stopPropagation();openImg('Dicoding5.png','Front-End Web Development')"><i class="fas fa-eye"></i> Lihat</span>
+            <a class="cert-link drive" href="https://drive.google.com/drive/folders/1lqVbAI1_Y1VnaQqOD6qTIdKVmeWW-pHf?usp=sharing" target="_blank" onclick="event.stopPropagation()"><i class="fab fa-google-drive"></i> Drive</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- CERT 6 -->
+      <div class="cert-item" onclick="openImg('ser ing.png','English Certificate')">
+        <div class="cert-img-wrap">
+          <img src="ser ing.png" alt="English Certificate" class="cert-img"
+               onerror="this.src='https://placehold.co/600x380/dbeafe/3b82f6?text=Sertifikat'">
+        </div>
+        <div class="cert-info">
+          <h4>English Certificate</h4>
+          <p>Dasar komunikasi menggunakan bahasa Inggris.</p>
+          <div class="cert-links">
+            <span class="cert-link view" onclick="event.stopPropagation();openImg('ser ing.png','English Certificate')"><i class="fas fa-eye"></i> Lihat</span>
+            <a class="cert-link drive" href="https://drive.google.com/drive/folders/1lqVbAI1_Y1VnaQqOD6qTIdKVmeWW-pHf?usp=sharing" target="_blank" onclick="event.stopPropagation()"><i class="fab fa-google-drive"></i> Drive</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- CERT 7 -->
+      <div class="cert-item" onclick="openImg('Dicoding1.png','Cloud Practitioner')">
+        <div class="cert-img-wrap">
+          <img src="Dicoding1.png" alt="Cloud Practitioner" class="cert-img"
+               onerror="this.src='https://placehold.co/600x380/ffe4e6/f43f5e?text=Sertifikat'">
+        </div>
+        <div class="cert-info">
+          <h4>Cloud Practitioner</h4>
+          <p>Pengenalan cloud computing AWS.</p>
+          <div class="cert-links">
+            <span class="cert-link view" onclick="event.stopPropagation();openImg('Dicoding1.png','Cloud Practitioner')"><i class="fas fa-eye"></i> Lihat</span>
+            <a class="cert-link drive" href="https://drive.google.com/drive/folders/1lqVbAI1_Y1VnaQqOD6qTIdKVmeWW-pHf?usp=sharing" target="_blank" onclick="event.stopPropagation()"><i class="fab fa-google-drive"></i> Drive</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- CERT 8 -->
+      <div class="cert-item" onclick="openImg('Dicoding3.png','JavaScript Essentials')">
+        <div class="cert-img-wrap">
+          <img src="Dicoding3.png" alt="JavaScript Essentials" class="cert-img"
+               onerror="this.src='https://placehold.co/600x380/fef9c3/ca8a04?text=Sertifikat'">
+        </div>
+        <div class="cert-info">
+          <h4>JavaScript Essentials</h4>
+          <p>Belajar JavaScript untuk website interaktif.</p>
+          <div class="cert-links">
+            <span class="cert-link view" onclick="event.stopPropagation();openImg('Dicoding3.png','JavaScript Essentials')"><i class="fas fa-eye"></i> Lihat</span>
+            <a class="cert-link drive" href="https://drive.google.com/drive/folders/1lqVbAI1_Y1VnaQqOD6qTIdKVmeWW-pHf?usp=sharing" target="_blank" onclick="event.stopPropagation()"><i class="fab fa-google-drive"></i> Drive</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- CERT 9 -->
+      <div class="cert-item" onclick="openImg('Dicoding4.png','React JS Dasar')">
+        <div class="cert-img-wrap">
+          <img src="Dicoding4.png" alt="React JS Dasar" class="cert-img"
+               onerror="this.src='https://placehold.co/600x380/d1fae5/059669?text=Sertifikat'">
+        </div>
+        <div class="cert-info">
+          <h4>React JS Dasar</h4>
+          <p>Pengenalan React JS dan komponen modern.</p>
+          <div class="cert-links">
+            <span class="cert-link view" onclick="event.stopPropagation();openImg('Dicoding4.png','React JS Dasar')"><i class="fas fa-eye"></i> Lihat</span>
+            <a class="cert-link drive" href="https://drive.google.com/drive/folders/1lqVbAI1_Y1VnaQqOD6qTIdKVmeWW-pHf?usp=sharing" target="_blank" onclick="event.stopPropagation()"><i class="fab fa-google-drive"></i> Drive</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- CERT 10 -->
+      <div class="cert-item" onclick="openImg('Dicoding5.png','Basic UI/UX Design')">
+        <div class="cert-img-wrap">
+          <img src="Dicoding5.png" alt="Basic UI/UX Design" class="cert-img"
+               onerror="this.src='https://placehold.co/600x380/ede9fe/7c3aed?text=Sertifikat'">
+        </div>
+        <div class="cert-info">
+          <h4>Basic UI/UX Design</h4>
+          <p>Belajar desain UI/UX modern dan sederhana.</p>
+          <div class="cert-links">
+            <span class="cert-link view" onclick="event.stopPropagation();openImg('Dicoding5.png','Basic UI/UX Design')"><i class="fas fa-eye"></i> Lihat</span>
+            <a class="cert-link drive" href="https://drive.google.com/drive/folders/1lqVbAI1_Y1VnaQqOD6qTIdKVmeWW-pHf?usp=sharing" target="_blank" onclick="event.stopPropagation()"><i class="fab fa-google-drive"></i> Drive</a>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /certGrid -->
+
+    <!-- Pagination -->
+    <div class="cert-pagination">
+      <button class="cert-page-btn" id="certPrev"><i class="fas fa-chevron-left"></i> Sebelumnya</button>
+      <span class="cert-page-info" id="certPageInfo"></span>
+      <button class="cert-page-btn" id="certNext">Selanjutnya <i class="fas fa-chevron-right"></i></button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════
+       AWARDS
+  ══════════════════════════ -->
+  <div class="portfolio-category">
+    <div class="category-header">
+      <i class="fas fa-trophy"></i>
+      <h3>🏅 Awards &amp; Prestasi</h3>
+    </div>
+    <div class="awards-grid">
+
+      <div class="award-item">
+
+  <div class="award-img-wrap">
+    <img src="Lomba1.jpeg"
+         alt="Lomba Menyanyi"
+         class="award-img"
+         onclick="openImg('Lomba1.jpeg','Juara 3 Lomba Menyanyi Umum 🎤')"
+         onerror="this.src='https://placehold.co/600x400/f0d5e8/b84a72?text=Award'">
+  </div>
+
+  <div class="award-info">
+    <h4>Lomba Menyanyi</h4>
+    <p>Juara 3 Lomba Menyanyi Umum. "d'Circle-Over'O"</p>
+
+    <!-- BUTTON VIEW -->
+    <div class="award-btn-group">
+      <button class="btn-view"
+        onclick="openImg('Lomba1.jpeg','Juara 3 Lomba Menyanyi Umum 🎤')">
+        <i class="fas fa-eye"></i> View
+      </button>
+    </div>
+
+  </div>
+</div>
+
+      <div class="award-item" onclick="openImg('prov.jpeg','Lomba Menyanyi FLS2N Tingkat Provinsi 🏆')">
+        <div class="award-img-wrap">
+          <img src="prov.jpeg" alt="FLS2N Provinsi" class="award-img"
+               onerror="this.src='https://placehold.co/600x400/d5e8f0/4a90e2?text=Award'">
+        </div>
+        <div class="award-info">
+          <h4>Lomba Menyanyi FLS2N</h4>
+          <p>Lomba Menyanyi FLS2N Tingkat Provinsi.</p>
+           <!-- BUTTON VIEW -->
+    <div class="award-btn-group">
+      <button class="btn-view"
+        onclick="openImg('prov.jpeg','Lomba Menyanyi FLS2N Tingkat Provinsi 🏆')">
+        <i class="fas fa-eye"></i> View
+      </button>
+    </div>
+        </div>
+      </div>
+
+      <div class="award-item" onclick="openImg('lomba3.jpeg','Juara 1 FLS2N Tingkat Kabupaten 🥇')">
+        <div class="award-img-wrap">
+          <img src="lomba3.jpeg" alt="FLS2N Kabupaten" class="award-img"
+               onerror="this.src='https://placehold.co/600x400/e8d5f0/a855f7?text=Award'">
+        </div>
+        <div class="award-info">
+          <h4>FLS2N Tingkat Kabupaten</h4>
+          <p>Juara 1 Lomba Menyanyi Tingkat Kabupaten.</p>
+           <!-- BUTTON VIEW -->
+    <div class="award-btn-group">
+      <button class="btn-view"
+        onclick="openImg('lomba3.jpeg','Juara 1 FLS2N Tingkat Kabupaten 🥇')">
+        <i class="fas fa-eye"></i> View
+      </button>
+    </div>
+        </div>
+      </div>
+
+      <div class="award-item" onclick="openImg('lomba4.jpeg','Juara 1 Lomba Menyanyi Islami 🥇')">
+        <div class="award-img-wrap">
+          <img src="lomba4.jpeg" alt="Lomba Menyanyi Islami" class="award-img"
+               onerror="this.src='https://placehold.co/600x400/fef9c3/ca8a04?text=Award'">
+        </div>
+        <div class="award-info">
+          <h4>Lomba Menyanyi Islami</h4>
+          <p>Juara 1 Lomba Menyanyi Islami. "One Day Islamic"</p>
+           <!-- BUTTON VIEW -->
+    <div class="award-btn-group">
+      <button class="btn-view"
+        onclick="openImg('lomba4.jpeg','Juara 1 Lomba Menyanyi Islami 🥇')">
+        <i class="fas fa-eye"></i> View
+      </button>
+    </div>
+        </div>
+      </div>
+
+      <div class="award-item" onclick="openImg('lomba5.jpeg','Medali Perak Paduan Suara 🥈')">
+        <div class="award-img-wrap">
+          <img src="lomba5.jpeg" alt="Paduan Suara" class="award-img"
+               onerror="this.src='https://placehold.co/600x400/d1fae5/059669?text=Award'">
+        </div>
+        <div class="award-info">
+          <h4>Lomba Paduan Suara</h4>
+          <p>Mendapatkan Medali Perak Kategori Umum.</p>
+           <!-- BUTTON VIEW -->
+    <div class="award-btn-group">
+      <button class="btn-view"
+        onclick="openImg('lomba5.jpeg','Medali Perak Paduan Suara 🥈')">
+        <i class="fas fa-eye"></i> View
+      </button>
+    </div>
+        </div>
+      </div>
+
+      <div class="award-item" onclick="openImg('foto6.jpeg','Medali Perak Paduan Suara 🥈')">
+        <div class="award-img-wrap">
+          <img src="foto6.jpeg" alt="Paduan Suara 2" class="award-img"
+               onerror="this.src='https://placehold.co/600x400/dbeafe/3b82f6?text=Award'">
+        </div>
+        <div class="award-info">
+          <h4>Lomba Paduan Suara</h4>
+          <p>Mendapatkan Medali Perak Kategori Umum.</p>
+           <!-- BUTTON VIEW -->
+    <div class="award-btn-group">
+      <button class="btn-view"
+        onclick="openImg('foto6.jpeg','Medali Perak Paduan Suara 🥈')">
+        <i class="fas fa-eye"></i> View
+      </button>
+    </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+</main>
+
+<footer>
+  <p><i class="fas fa-heart" style="color:#e86b9c;"></i> Personal Branding | Ferissa Ilen Aswa Aulia | 2026</p>
+</footer>
+
+<!-- ════ ALL SCRIPTS AT BOTTOM ════ -->
+<script src="main.js"></script>
+<script>
+/* ── Unified Popup ─────────────────────────────────────────────────── */
+const popup    = document.getElementById('uniPopup');
+const uniClose = document.getElementById('uniClose');
+const uniImg   = document.getElementById('uniImg');
+const uniCap   = document.getElementById('uniCaption');
+const uniCard  = document.getElementById('uniCard');
+
+function openPopupBase() {
+  popup.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closePopup() {
+  popup.classList.remove('open');
+  document.body.style.overflow = '';
+  uniImg.style.display  = 'none';
+  uniCap.style.display  = 'none';
+  uniCard.style.display = 'none';
+  uniImg.src = ''; // reset
+}
+
+// Close on button click
+uniClose.addEventListener('click', closePopup);
+// Close on backdrop click
+popup.addEventListener('click', function(e) {
+  if (e.target === popup) closePopup();
+});
+// Close on Escape
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closePopup();
+});
+
+/* Open image fullscreen */
+function openImg(src, caption) {
+  uniImg.src = src;
+  uniImg.alt = caption || '';
+  uniImg.onerror = () => { uniImg.src = 'https://placehold.co/600x400/f0d5e8/b84a72?text=Foto'; };
+  uniCap.textContent = caption || '';
+  uniImg.style.display  = 'block';
+  uniCap.style.display  = caption ? 'block' : 'none';
+  uniCard.style.display = 'none';
+  openPopupBase();
+}
+
+/* Open card modal (project / design detail) */
+function openCard(data) {
+  // fill card
+  const img = document.getElementById('ucImg');
+  img.src = data.img || '';
+  img.onerror = () => { img.src = 'https://placehold.co/600x400/f0d5e8/b84a72?text=Preview'; };
+
+  document.getElementById('ucTitle').textContent = data.title || '';
+  document.getElementById('ucDesc').textContent  = data.desc  || '';
+
+  const tagsEl = document.getElementById('ucTags');
+  tagsEl.innerHTML = '';
+  (data.tags || []).forEach(t => {
+    const s = document.createElement('span');
+    s.className = 'uc-tag'; s.textContent = t; tagsEl.appendChild(s);
+  });
+
+  const actEl = document.getElementById('ucActions');
+  actEl.innerHTML = '';
+  (data.actions || []).forEach(a => {
+    if (a.mode === 'img') {
+      // show image fullscreen button
+      const btn = document.createElement('button');
+      btn.className = a.cls || 'btn-view';
+      btn.style.cssText = 'border:none;cursor:pointer;font-family:Poppins,sans-serif;';
+      btn.innerHTML = `<i class="${a.icon}"></i> ${a.label}`;
+      btn.addEventListener('click', () => openImg(data.img, data.title));
+      actEl.appendChild(btn);
+    } else {
+      const link = document.createElement('a');
+      link.className = a.cls || 'btn-view';
+      link.innerHTML = `<i class="${a.icon}"></i> ${a.label}`;
+      link.href = a.href || '#';
+      if (a.href && a.href !== '#') link.target = '_blank';
+      actEl.appendChild(link);
+    }
+  });
+
+  uniImg.style.display  = 'none';
+  uniCap.style.display  = 'none';
+  uniCard.style.display = 'block';
+  openPopupBase();
+}
+
+/* ── Certificate pagination ────────────────────────────────────────── */
+(function() {
+  const grid     = document.getElementById('certGrid');
+  const prevBtn  = document.getElementById('certPrev');
+  const nextBtn  = document.getElementById('certNext');
+  const info     = document.getElementById('certPageInfo');
+  const items    = Array.from(grid.querySelectorAll('.cert-item'));
+  const perPage  = 6;
+  let   page     = 0;
+  const total    = Math.ceil(items.length / perPage);
+
+  function render() {
+    items.forEach((item, i) => {
+      item.style.display = (i >= page * perPage && i < (page + 1) * perPage) ? '' : 'none';
+    });
+    info.textContent  = `Halaman ${page + 1} / ${total}`;
+    prevBtn.disabled  = page === 0;
+    nextBtn.disabled  = page === total - 1;
+  }
+
+  prevBtn.addEventListener('click', () => {
+    if (page > 0) { page--; render(); grid.scrollIntoView({ behavior:'smooth', block:'start' }); }
+  });
+  nextBtn.addEventListener('click', () => {
+    if (page < total - 1) { page++; render(); grid.scrollIntoView({ behavior:'smooth', block:'start' }); }
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

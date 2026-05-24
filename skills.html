@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skills | FerissaSpace</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <style>
+
+/* ═══ PHOTO POPUP ═══ */
+#photoPopup {
+  display:none; position:fixed; inset:0; z-index:9999;
+  background:rgba(0,0,0,0.72); backdrop-filter:blur(10px);
+  align-items:center; justify-content:center; cursor:zoom-out;
+  flex-direction:column; gap:1rem;
+}
+#photoPopup.open { display:flex; }
+#photoPopup img {
+  max-width:88vw; max-height:80vh;
+  border-radius:1.5rem;
+  box-shadow:0 20px 60px rgba(0,0,0,0.5);
+  animation:popIn 0.3s ease;
+}
+#popupCaption {
+  background:rgba(255,245,250,0.9); backdrop-filter:blur(8px);
+  padding:0.5rem 1.5rem; border-radius:30px;
+  font-size:0.9rem; font-weight:600; color:#b84a72;
+}
+@keyframes popIn { from{transform:scale(0.78);opacity:0} to{transform:scale(1);opacity:1} }
+
+/* ═══ DIVIDER ═══ */
+.div-row {
+  display:flex; align-items:center; gap:1rem;
+  margin:2.2rem 0 1.8rem;
+}
+.div-line {
+  flex:1; height:2px;
+  background:linear-gradient(90deg,transparent,rgba(232,107,156,0.55),rgba(74,144,226,0.55),transparent);
+  border-radius:4px; overflow:hidden; position:relative;
+}
+.div-line::after {
+  content:''; position:absolute; top:0; left:-100%; width:55%; height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.9),transparent);
+  animation:slideShimmer 2.6s linear infinite;
+}
+@keyframes slideShimmer { to{left:200%} }
+.div-label {
+  font-size:0.78rem; font-weight:800; letter-spacing:2.5px; text-transform:uppercase;
+  background:linear-gradient(135deg,#e86b9c,#4a90e2);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  white-space:nowrap;
+}
+
+/* ═══ SKILLS SECTION HEADER ═══ */
+.skills-group { margin-bottom:2.5rem; }
+.skills-group-title {
+  display:flex; align-items:center; gap:0.7rem;
+  font-size:1.15rem; font-weight:700; color:#b84a72;
+  margin-bottom:1.4rem;
+  padding-bottom:0.5rem;
+  border-bottom:2px dashed rgba(232,107,156,0.3);
+}
+.skills-group-title i {
+  width:36px; height:36px; border-radius:10px;
+  background:linear-gradient(135deg,rgba(232,107,156,0.15),rgba(74,144,226,0.15));
+  display:flex; align-items:center; justify-content:center;
+  font-size:1rem;
+  background-image:linear-gradient(135deg,#e86b9c,#4a90e2);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+
+/* ═══ PROGRESS BARS ═══ */
+.skill-row {
+  margin-bottom:1.3rem; cursor:pointer;
+  transition: transform 0.2s;
+}
+.skill-row:hover { transform:translateX(4px); }
+.skill-top {
+  display:flex; justify-content:space-between; align-items:center;
+  margin-bottom:0.55rem;
+}
+.skill-name {
+  display:flex; align-items:center; gap:0.55rem;
+  font-size:0.92rem; font-weight:600; color:#4a2a3a;
+}
+.skill-name i { color:#e86b9c; font-size:1rem; width:18px; text-align:center; }
+.skill-pct {
+  font-size:0.85rem; font-weight:700;
+  background:linear-gradient(135deg,#e86b9c,#4a90e2);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.bar-track {
+  height:12px; border-radius:20px;
+  background:rgba(245,208,222,0.45);
+  overflow:hidden; position:relative;
+}
+.bar-fill {
+  height:100%; border-radius:20px; width:0%;
+  background:linear-gradient(90deg,#e86b9c,#9b59b6,#4a90e2);
+  transition:width 1.2s cubic-bezier(0.25,1,0.5,1);
+  position:relative; overflow:hidden;
+}
+/* shine on bar */
+.bar-fill::after {
+  content:''; position:absolute; top:0; left:-80px;
+  width:60px; height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.45),transparent);
+  animation:barShine 2s linear infinite;
+}
+@keyframes barShine { to{left:200%} }
+
+/* ═══ SKILL CARDS (tools) ═══ */
+.tool-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
+  gap:1rem;
+}
+.tool-card {
+  background:rgba(255,255,255,0.48);
+  backdrop-filter:blur(8px);
+  border:1.5px solid rgba(255,255,255,0.68);
+  border-radius:1.2rem;
+  padding:1.3rem 1rem;
+  text-align:center; cursor:pointer;
+  transition:all 0.3s; position:relative; overflow:hidden;
+}
+.tool-card::after {
+  content:''; position:absolute; bottom:0; left:0; right:0;
+  height:3px; background:linear-gradient(90deg,#e86b9c,#4a90e2);
+  transform:scaleX(0); transform-origin:left; transition:0.35s;
+}
+.tool-card:hover { background:rgba(255,255,255,0.72); transform:translateY(-5px); box-shadow:0 10px 24px rgba(232,107,156,0.2); }
+.tool-card:hover::after { transform:scaleX(1); }
+.tool-icon {
+  font-size:2rem; margin-bottom:0.5rem; display:block;
+  background:linear-gradient(135deg,#e86b9c,#4a90e2);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.tool-name { font-size:0.82rem; font-weight:700; color:#b84a72; margin-bottom:0.25rem; }
+.tool-level { font-size:0.7rem; color:#7a5a6a; font-weight:500; }
+.tool-hint { font-size:0.68rem; color:#e86b9c; margin-top:0.4rem; opacity:0.7; }
+
+/* ═══ HOBBY CARDS ═══ */
+.hobby-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(190px,1fr));
+  gap:1.1rem;
+}
+.hobby-card {
+  background:rgba(255,255,255,0.48);
+  backdrop-filter:blur(8px);
+  border:1.5px solid rgba(255,255,255,0.65);
+  border-radius:1.2rem;
+  padding:1.5rem 1.2rem;
+  text-align:center; cursor:pointer;
+  transition:all 0.3s; position:relative; overflow:hidden;
+}
+.hobby-card:hover { background:rgba(255,255,255,0.72); transform:translateY(-5px) scale(1.03); box-shadow:0 12px 28px rgba(232,107,156,0.18); }
+.hc-emoji { font-size:2.4rem; display:block; margin-bottom:0.6rem; }
+.hobby-card h4 { font-size:0.9rem; font-weight:700; color:#b84a72; margin-bottom:0.3rem; }
+.hobby-card p  { font-size:0.78rem; color:#5a3a4a; line-height:1.55; }
+.hobby-badge {
+  position:absolute; top:10px; right:10px;
+  font-size:0.65rem; font-weight:700;
+  background:rgba(232,107,156,0.15);
+  border:1px solid rgba(232,107,156,0.3);
+  color:#e86b9c; padding:0.2rem 0.6rem; border-radius:20px;
+}
+
+
+/* ═══ SOFT SKILL TAGS ═══ */
+.soft-tags { display:flex; flex-wrap:wrap; gap:0.8rem; }
+.soft-tag {
+  display:inline-flex; align-items:center; gap:0.5rem;
+  background:rgba(255,255,255,0.55); backdrop-filter:blur(6px);
+  border:1.5px solid rgba(255,255,255,0.72);
+  padding:0.6rem 1.3rem; border-radius:30px;
+  font-size:0.85rem; font-weight:600; color:#5a3a4a;
+  transition:all 0.25s; cursor:pointer;
+}
+.soft-tag i { color:#e86b9c; }
+.soft-tag:hover { background:rgba(255,255,255,0.85); transform:translateY(-3px) scale(1.04); box-shadow:0 6px 16px rgba(232,107,156,0.2); }
+
+/* ═══ RESPONSIVE ═══ */
+@media(max-width:600px){
+  .tool-grid  { grid-template-columns:1fr 1fr; }
+  .hobby-grid { grid-template-columns:1fr 1fr; }
+}
+  </style>
+</head>
+<body>
+
+<div class="animated-bg"></div>
+<div class="hearts-container" id="hearts-container"></div>
+
+<!-- Photo popup -->
+<div id="photoPopup" onclick="closePopup()">
+  <img id="popupImg" src="" alt="">
+  <div id="popupCaption"></div>
+</div>
+
+<nav class="navbar">
+  <a href="index.html" class="logo">✨ FerissaSpace</a>
+  <ul class="nav-menu">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="skills.html">Skills</a></li>
+    <li><a href="portfolio.html">Portofolio</a></li>
+    <li><a href="cv.html">CV</a></li>
+  </ul>
+  <div class="menu-toggle"><i class="fas fa-bars"></i></div>
+</nav>
+
+<main class="container">
+<section id="skills-section" class="section-card">
+  <h2 class="section-title"><i class="fas fa-cogs"></i> Keahlian</h2>
+
+  <!-- ══════════════════════════
+       TECHNICAL SKILLS – BARS
+  ══════════════════════════ -->
+  <div class="div-row">
+    <div class="div-line"></div>
+    <div class="div-label">✦ Technical Skills ✦</div>
+    <div class="div-line"></div>
+  </div>
+
+  <div class="skills-group">
+    <div class="skills-group-title">
+      <i class="fas fa-laptop-code"></i> Programming & Web
+    </div>
+
+    <div class="skill-row" onclick="openPopup('foto1.jpeg','HTML5 & CSS3 — 88%')">
+      <div class="skill-top">
+        <div class="skill-name"><i class="fab fa-html5"></i> HTML5 &amp; CSS3</div>
+        <div class="skill-pct">88%</div>
+      </div>
+      <div class="bar-track"><div class="bar-fill" data-pct="88"></div></div>
+    </div>
+
+    <div class="skill-row" onclick="openPopup('foto1.jpeg','JavaScript — 72%')">
+      <div class="skill-top">
+        <div class="skill-name"><i class="fab fa-js"></i> JavaScript (Dasar)</div>
+        <div class="skill-pct">72%</div>
+      </div>
+      <div class="bar-track"><div class="bar-fill" data-pct="72"></div></div>
+    </div>
+
+    <div class="skill-row" onclick="openPopup('foto1.jpeg','Responsive Design — 85%')">
+      <div class="skill-top">
+        <div class="skill-name"><i class="fas fa-mobile-alt"></i> Responsive Design</div>
+        <div class="skill-pct">85%</div>
+      </div>
+      <div class="bar-track"><div class="bar-fill" data-pct="85"></div></div>
+    </div>
+  </div>
+
+  <div class="skills-group">
+    <div class="skills-group-title">
+      <i class="fas fa-tools"></i> Tools & Software
+    </div>
+
+    <div class="skill-row" onclick="openPopup('foto1.jpeg','Figma — 85%')">
+      <div class="skill-top">
+        <div class="skill-name"><i class="fab fa-figma"></i> Figma (UI Design)</div>
+        <div class="skill-pct">85%</div>
+      </div>
+      <div class="bar-track"><div class="bar-fill" data-pct="85"></div></div>
+    </div>
+
+    <div class="skill-row" onclick="openPopup('foto1.jpeg','Canva & Editing — 92%')">
+      <div class="skill-top">
+        <div class="skill-name"><i class="fas fa-pen-fancy"></i> Canva &amp; Editing</div>
+        <div class="skill-pct">92%</div>
+      </div>
+      <div class="bar-track"><div class="bar-fill" data-pct="92"></div></div>
+    </div>
+
+    <div class="skill-row" onclick="openPopup('foto1.jpeg','Cisco Packet Tracer — 80%')">
+      <div class="skill-top">
+        <div class="skill-name"><i class="fas fa-network-wired"></i> Cisco Packet Tracer</div>
+        <div class="skill-pct">80%</div>
+      </div>
+      <div class="bar-track"><div class="bar-fill" data-pct="80"></div></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════
+       TOOLS GRID (clickable cards)
+  ══════════════════════════ -->
+  <div class="div-row">
+    <div class="div-line"></div>
+    <div class="div-label">✦ Tools Yang Saya Kuasai ✦</div>
+    <div class="div-line"></div>
+  </div>
+  <div class="tool-grid">
+    <div class="tool-card" onclick=>
+      <i class="fab fa-html5 tool-icon"></i>
+      <div class="tool-name">HTML5</div>
+      <div class="tool-level">Advanced</div>
+      
+    </div>
+    <div class="tool-card" onclick=>
+      <i class="fab fa-css3-alt tool-icon"></i>
+      <div class="tool-name">CSS3</div>
+      <div class="tool-level">Advanced</div>
+    </div>
+    <div class="tool-card" onclick=>
+      <i class="fab fa-js tool-icon"></i>
+      <div class="tool-name">JavaScript</div>
+      <div class="tool-level">Intermediate</div>
+    </div>
+    <div class="tool-card" onclick=>
+      <i class="fab fa-figma tool-icon"></i>
+      <div class="tool-name">Figma</div>
+      <div class="tool-level">Advanced</div>
+    </div>
+    <div class="tool-card" onclick=>
+      <i class="fas fa-pen-fancy tool-icon"></i>
+      <div class="tool-name">Canva</div>
+      <div class="tool-level">Expert</div>
+    </div>
+    <div class="tool-card" onclick=>
+      <i class="fas fa-network-wired tool-icon"></i>
+      <div class="tool-name">Cisco</div>
+      <div class="tool-level">Intermediate</div>
+    </div>
+    <div class="tool-card" onclick=>
+      <i class="fab fa-git-alt tool-icon"></i>
+      <div class="tool-name">Git</div>
+      <div class="tool-level">Basic</div>
+    </div>
+    <div class="tool-card" onclick=>
+      <i class="fas fa-code tool-icon"></i>
+      <div class="tool-name">VS Code</div>
+      <div class="tool-level">Advanced</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════
+       SOFT SKILLS
+  ══════════════════════════ -->
+  <div class="div-row">
+    <div class="div-line"></div>
+    <div class="div-label">✦ Soft Skills ✦</div>
+    <div class="div-line"></div>
+  </div>
+
+  <div class="skills-group">
+    <div class="skill-row" onclick="openPopup('foto1.jpeg','Komunikasi & Presentasi — 90%')">
+      <div class="skill-top">
+        <div class="skill-name"><i class="fas fa-chalkboard-teacher"></i> Komunikasi &amp; Presentasi</div>
+        <div class="skill-pct">90%</div>
+      </div>
+      <div class="bar-track"><div class="bar-fill" data-pct="90"></div></div>
+    </div>
+    <div class="skill-row" onclick="openPopup('foto1.jpeg','Kerja Tim & Kolaborasi — 88%')">
+      <div class="skill-top">
+        <div class="skill-name"><i class="fas fa-users"></i> Kerja Tim &amp; Kolaborasi</div>
+        <div class="skill-pct">88%</div>
+      </div>
+      <div class="bar-track"><div class="bar-fill" data-pct="88"></div></div>
+    </div>
+    <div class="skill-row" onclick="openPopup('foto1.jpeg','Problem Solving — 82%')">
+      <div class="skill-top">
+        <div class="skill-name"><i class="fas fa-brain"></i> Problem Solving</div>
+        <div class="skill-pct">82%</div>
+      </div>
+      <div class="bar-track"><div class="bar-fill" data-pct="82"></div></div>
+    </div>
+    <div class="skill-row" onclick="openPopup('foto1.jpeg','Kreativitas & Inovasi — 91%')">
+      <div class="skill-top">
+        <div class="skill-name"><i class="fas fa-lightbulb"></i> Kreativitas &amp; Inovasi</div>
+        <div class="skill-pct">91%</div>
+      </div>
+      <div class="bar-track"><div class="bar-fill" data-pct="91"></div></div>
+    </div>
+  </div>
+
+  <!-- additional soft tags -->
+  <div class="soft-tags">
+    <div class="soft-tag"><i class="fas fa-sync-alt"></i> Adaptasi Cepat</div>
+    <div class="soft-tag"><i class="fas fa-clock"></i> Manajemen Waktu</div>
+    <div class="soft-tag"><i class="fas fa-heart"></i> Empati</div>
+    <div class="soft-tag"><i class="fas fa-star"></i> Motivasi Tinggi</div>
+    <div class="soft-tag"><i class="fas fa-scroll"></i> Belajar Mandiri</div>
+  </div>
+
+  <!-- ══════════════════════════
+       HOBBY SKILLS (click for photo)
+  ══════════════════════════ -->
+  <div class="div-row">
+    <div class="div-line"></div>
+    <div class="div-label">✦ Hobi &amp; Skill Kreatif ✦</div>
+    <div class="div-line"></div>
+  </div>
+
+  <div class="hobby-grid">
+    <div class="hobby-card" onclick="openPopup('gitar.jpeg','Saya & Gitar 🎸')">
+      <span class="hc-emoji">🎸</span>
+      <h4>Bermain Gitar</h4>
+      <p>Bermain gitar biasanya untuk mengisi waktu luang</p>
+      <div class="hobby-badge">📷 tap</div>
+    </div>
+    <div class="hobby-card" onclick="openPopup('menyanyi.jpeg','Menyanyi 🎤')">
+      <span class="hc-emoji">🎤</span>
+      <h4>Menyanyi</h4>
+      <p>Mengekspresikan perasaan melalui suara dan melodi</p>
+      <div class="hobby-badge">📷 tap</div>
+    </div>
+    <div class="hobby-card" onclick="openPopup('roblox.jpeg','Roblox 🎮')">
+      <span class="hc-emoji">🎮</span>
+      <h4>Bermain Game</h4>
+      <p>Bermain Game sebagai hiburan di waktu luang</p>
+      <div class="hobby-badge">📷 tap</div>
+    </div>
+    <div class="hobby-card" onclick="openPopup('mendengarkan musik.jpeg','Mendengarkan Musik 🎧')">
+      <span class="hc-emoji">🎧</span>
+      <h4>Mendengarkan Musik</h4>
+      <p>Mendengarkan musik favorit dapat menambah semangat</p>
+      <div class="hobby-badge">📷 tap</div>
+    </div>
+    <div class="hobby-card" onclick="openPopup('alam.jpeg','Menjelajah ⛰️')">
+      <span class="hc-emoji">⛰️</span>
+      <h4>Menjelajah Alam</h4>
+      <p>Menjelajah alam adalah pengalaman yang menyenangkan</p>
+      <div class="hobby-badge">📷 tap</div>
+    </div>
+    <div class="hobby-card" onclick="openPopup('jogging.jpeg','Jogging 🏃')">
+      <span class="hc-emoji">🏃</span>
+      <h4>Jogging</h4>
+      <p>Menjaga kesehatan fisik dan produktivitas</p>
+      <div class="hobby-badge">📷 tap</div>
+    </div>
+  </div>
+
+</section>
+</main>
+
+<footer>
+  <p><i class="fas fa-heart" style="color:#e86b9c;"></i> Personal Branding | Ferissa Ilen Aswa Aulia | 2026</p>
+</footer>
+
+<script src="main.js"></script>
+<script>
+  // Run progress bar animation immediately on load
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.querySelectorAll('.bar-fill[data-pct]').forEach(bar => {
+        bar.style.width = bar.getAttribute('data-pct') + '%';
+      });
+    }, 300);
+  });
+
+  function openPopup(src, caption) {
+    const popup = document.getElementById('photoPopup');
+    const img   = document.getElementById('popupImg');
+    const cap   = document.getElementById('popupCaption');
+    img.src = src;
+    img.onerror = () => { img.src = 'https://randomuser.me/api/portraits/women/68.jpg'; };
+    cap.textContent = caption;
+    popup.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closePopup() {
+    document.getElementById('photoPopup').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closePopup(); });
+</script>
+</body>
+</html>
