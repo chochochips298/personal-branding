@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,7 +21,6 @@
 }
 #uniPopup.open { display: flex; }
 
-/* close button — always on top */
 #uniClose {
   position: fixed; top: 1.2rem; right: 1.5rem;
   width: 46px; height: 46px;
@@ -35,7 +34,6 @@
 }
 #uniClose:hover { background: #e86b9c; border-color: #e86b9c; transform: rotate(90deg) scale(1.1); }
 
-/* image mode */
 #uniPopup .uni-img {
   max-width: 90vw; max-height: 82vh;
   border-radius: 1.2rem;
@@ -44,7 +42,6 @@
   display: block;
   animation: popIn .3s ease;
 }
-/* caption below image */
 #uniCaption {
   background: rgba(255,245,250,.92);
   backdrop-filter: blur(8px);
@@ -54,7 +51,6 @@
   animation: popIn .3s ease;
 }
 
-/* card mode (for portfolio project/design modals) */
 #uniCard {
   background: rgba(255,248,252,.97);
   border-radius: 1.6rem;
@@ -85,13 +81,10 @@
 
 @keyframes popIn { from{transform:scale(.8);opacity:0} to{transform:scale(1);opacity:1} }
 
-/* ══ CERT ITEMS — clickable ══ */
-.cert-item {
-  cursor: pointer;
-}
+/* ══ CERT ITEMS ══ */
+.cert-item { cursor: pointer; }
 .cert-item:hover .cert-img { transform: scale(1.05); }
 
-/* cert drive link row */
 .cert-links {
   display: flex; gap: .5rem; flex-wrap: wrap; margin-top: .8rem;
 }
@@ -205,10 +198,10 @@
 .cert-info h4 { font-size: .9rem; font-weight: 700; color: #b84a72; margin-bottom: .25rem; }
 .cert-info p  { font-size: .78rem; color: #5a3a4a; line-height: 1.55; }
 
-/* awards grid — 3 per row */
+/* awards grid */
 .awards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.6rem;
 }
 .award-item {
@@ -216,18 +209,24 @@
   border: 1.5px solid rgba(255,255,255,.65);
   border-radius: 1.3rem; overflow: hidden;
   transition: all .35s; cursor: pointer;
+  display: flex; flex-direction: column;
 }
 .award-item:hover { transform: translateY(-7px); background: rgba(255,255,255,.62); box-shadow: 0 14px 32px rgba(232,107,156,.18); }
 .award-img-wrap { overflow: hidden; height: 200px; }
 .award-img { width: 100%; height: 200px; object-fit: cover; display: block; transition: transform .35s; }
 .award-item:hover .award-img { transform: scale(1.06); }
-.award-info { padding: 1.1rem 1.2rem; }
+.award-info { padding: 1.1rem 1.2rem; flex: 1; display: flex; flex-direction: column; }
 .award-info h4 { font-size: 1rem; font-weight: 700; color: #b84a72; margin-bottom: .3rem; }
-.award-info p  { font-size: .83rem; color: #5a3a4a; line-height: 1.6; }
+.award-info p  { font-size: .83rem; color: #5a3a4a; line-height: 1.6; flex: 1; }
+.award-btn-group { margin-top: .8rem; }
 
 /* ══ RESPONSIVE ══ */
+@media (max-width: 900px) {
+  .awards-grid { grid-template-columns: repeat(2, 1fr); }
+}
 @media (max-width: 700px) {
-  .portfolio-grid, .awards-grid { grid-template-columns: 1fr; }
+  .portfolio-grid { grid-template-columns: 1fr; }
+  .awards-grid { grid-template-columns: 1fr; }
   .cert-grid { grid-template-columns: 1fr 1fr; }
   #uniCard { padding: 1.4rem; }
   #uniCard .uc-img { max-height: 220px; }
@@ -245,14 +244,9 @@
 
 <!-- ════ UNIFIED POPUP ════ -->
 <div id="uniPopup">
-  <!-- close always visible -->
-  <button id="uniClose" title="Tutup (Esc)">&times;</button>
-
-  <!-- image-only mode -->
+  <button id="uniClose" title="Close (Esc)">&times;</button>
   <img class="uni-img" id="uniImg" src="" alt="" style="display:none;">
   <div id="uniCaption" style="display:none;"></div>
-
-  <!-- card mode (project/design detail) -->
   <div id="uniCard" style="display:none;">
     <img class="uc-img" id="ucImg" src="" alt="">
     <div class="uc-title"  id="ucTitle"></div>
@@ -265,9 +259,9 @@
 <nav class="navbar">
   <a href="index.html" class="logo">✨ FerissaSpace</a>
   <ul class="nav-menu">
-    <li><a href="index.html">Beranda</a></li>
-    <li><a href="about.html">Tentang Saya</a></li>
-    <li><a href="skills.html">Skill</a></li>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="skills.html">Skills</a></li>
     <li><a href="portfolio.html">Portfolio</a></li>
     <li><a href="cv.html">CV</a></li>
   </ul>
@@ -292,7 +286,7 @@
         img:'foto2.png',
         title:'Pixel Vanguard',
         tags:['HTML','CSS','JavaScript','Responsive'],
-        desc:'Website modern bertema teknologi dengan tampilan aesthetic, responsive, dan animasi halus. Dibuat dengan penuh perhatian terhadap detail visual dan performa.',
+        desc:'Pixel Vanguard is a modern, technology-themed website designed as a platform for downloading games. Built with HTML, CSS, and JavaScript, it features a sleek aesthetic design, smooth animations, and a fully responsive layout.',
         actions:[{label:'Live Demo',cls:'btn-demo',icon:'fas fa-external-link-alt',href:'https://pixel-vanguard-eosin.vercel.app'}]
       })">
         <div class="portfolio-img-wrapper">
@@ -301,7 +295,7 @@
         </div>
         <div class="portfolio-info">
           <h4>Pixel Vanguard</h4>
-          <p>Website modern bertema teknologi dengan tampilan aesthetic, responsive, dan animasi halus.</p>
+          <p>Pixel Vanguard is a modern, aesthetic website built with HTML, CSS, and JavaScript as a platform for downloading games.</p>
           <div class="btn-group"><span class="btn-view"><i class="fas fa-eye"></i> Preview</span></div>
         </div>
       </div>
@@ -310,7 +304,7 @@
         img:'foto3.png',
         title:'MindPace',
         tags:['HTML','CSS','JavaScript','Productivity'],
-        desc:'Website produktivitas dan fokus dengan desain clean, interaktif, dan fitur manajemen waktu. Cocok untuk pelajar dan pekerja yang butuh fokus optimal.',
+        desc:'A productivity and focus website with a clean, interactive design and time management features. Perfect for students and professionals who need to stay focused and productive.',
         actions:[{label:'Live Demo',cls:'btn-demo',icon:'fas fa-external-link-alt',href:'https://mindpace-ruddy.vercel.app/'}]
       })">
         <div class="portfolio-img-wrapper">
@@ -319,7 +313,7 @@
         </div>
         <div class="portfolio-info">
           <h4>MindPace</h4>
-          <p>Website produktivitas dan fokus dengan desain clean, interaktif, dan fitur manajemen waktu.</p>
+          <p>MindPace is a clean, interactive productivity website designed to help users stay focused and manage their time effectively.</p>
           <div class="btn-group"><span class="btn-view"><i class="fas fa-eye"></i> Preview</span></div>
         </div>
       </div>
@@ -339,18 +333,18 @@
 
       <div class="portfolio-item" onclick="openCard({
         img:'canva1.png',
-        title:'7 Kebiasaan Anak Indonesia Hebat',
-        tags:['Canva','Poster','Kesehatan'],
-        desc:'Poster yang mengajak untuk selalu hidup sehat dengan 7 kebiasaan positif anak Indonesia hebat.',
-        actions:[{label:'Lihat Gambar',cls:'btn-view',icon:'fas fa-eye',href:'#',mode:'img'}]
+        title:'7 Habits of Great Indonesian Children',
+        tags:['Canva','Poster','Health'],
+        desc:'A poster encouraging a healthy lifestyle through 7 positive habits of great Indonesian children.',
+        actions:[{label:'View Image',cls:'btn-view',icon:'fas fa-eye',href:'#',mode:'img'}]
       })">
         <div class="portfolio-img-wrapper">
-          <img src="canva1.png" alt="7 Kebiasaan" class="portfolio-img"
-               onerror="this.src='https://placehold.co/600x400/f0d5e8/a855f7?text=Kebiasaan'">
+          <img src="canva1.png" alt="7 Habits" class="portfolio-img"
+               onerror="this.src='https://placehold.co/600x400/f0d5e8/a855f7?text=Habits'">
         </div>
         <div class="portfolio-info">
-          <h4>7 Kebiasaan Anak Indonesia Hebat</h4>
-          <p>Poster yang mengajak untuk selalu hidup sehat.</p>
+          <h4>7 Habits of Great Indonesian Children</h4>
+          <p>A poster encouraging everyone to maintain a healthy lifestyle.</p>
           <div class="btn-group"><span class="btn-view"><i class="fas fa-eye"></i> Preview</span></div>
         </div>
       </div>
@@ -358,9 +352,9 @@
       <div class="portfolio-item" onclick="openCard({
         img:'canva2.png',
         title:'School Schedule',
-        tags:['Canva','Template','Jadwal'],
-        desc:'Desain template jadwal sekolah estetik yang bisa digunakan dan dikustomisasi sesuai kebutuhan.',
-        actions:[{label:'Lihat Gambar',cls:'btn-view',icon:'fas fa-eye',href:'#',mode:'img'}]
+        tags:['Canva','Template','Schedule'],
+        desc:'An aesthetic school schedule template design that can be used and customized according to your needs.',
+        actions:[{label:'View Image',cls:'btn-view',icon:'fas fa-eye',href:'#',mode:'img'}]
       })">
         <div class="portfolio-img-wrapper">
           <img src="canva2.png" alt="School Schedule" class="portfolio-img"
@@ -368,7 +362,7 @@
         </div>
         <div class="portfolio-info">
           <h4>School Schedule</h4>
-          <p>Desain template jadwal sekolah yang bisa digunakan.</p>
+          <p>A customizable school schedule template designed for practical use.</p>
           <div class="btn-group"><span class="btn-view"><i class="fas fa-eye"></i> Preview</span></div>
         </div>
       </div>
@@ -376,53 +370,53 @@
       <div class="portfolio-item" onclick="openCard({
         img:'canva3.png',
         title:'Poster Cyberbullying',
-        tags:['Canva','Poster','Sosial'],
-        desc:'Poster kampanye anti-cyberbullying yang mengajak untuk tidak membully dan menciptakan lingkungan digital yang aman.',
-        actions:[{label:'Lihat Gambar',cls:'btn-view',icon:'fas fa-eye',href:'#',mode:'img'}]
+        tags:['Canva','Poster','Social'],
+        desc:'An anti-cyberbullying campaign poster encouraging people to stop bullying and create a safe digital environment.',
+        actions:[{label:'View Image',cls:'btn-view',icon:'fas fa-eye',href:'#',mode:'img'}]
       })">
         <div class="portfolio-img-wrapper">
-          <img src="canva3.png" alt="Poster Cyberbullying" class="portfolio-img"
+          <img src="canva3.png" alt="Cyberbullying Poster" class="portfolio-img"
                onerror="this.src='https://placehold.co/600x400/e8d5f0/a855f7?text=Cyberbullying'">
         </div>
         <div class="portfolio-info">
           <h4>Poster Cyberbullying</h4>
-          <p>Poster yang mengajak untuk tidak membully.</p>
+          <p>An anti-cyberbullying campaign poster encouraging people to stop bullying.</p>
           <div class="btn-group"><span class="btn-view"><i class="fas fa-eye"></i> Preview</span></div>
         </div>
       </div>
 
       <div class="portfolio-item" onclick="openCard({
         img:'canva4.jpg',
-        title:'Poster Agama',
-        tags:['Canva','Poster','Agama'],
-        desc:'Poster agama yang menjelaskan tentang salah satu Surah dalam Al-Quran dengan desain yang estetik dan informatif.',
-        actions:[{label:'Lihat Gambar',cls:'btn-view',icon:'fas fa-eye',href:'#',mode:'img'}]
+        title:'Religious Poster',
+        tags:['Canva','Poster','Religion'],
+        desc:'A religious poster explaining one of the Surahs in the Quran with an aesthetic and informative design.',
+        actions:[{label:'View Image',cls:'btn-view',icon:'fas fa-eye',href:'#',mode:'img'}]
       })">
         <div class="portfolio-img-wrapper">
-          <img src="canva5.png" alt="Poster Agama" class="portfolio-img"
-               onerror="this.src='https://placehold.co/600x400/e8e0d5/f59e0b?text=Agama'">
+          <img src="canva4.jpg" alt="Religious Poster" class="portfolio-img"
+               onerror="this.src='https://placehold.co/600x400/e8e0d5/f59e0b?text=Religion'">
         </div>
         <div class="portfolio-info">
-          <h4>Poster Agama</h4>
-          <p>Poster Agama menjelaskan tentang salah satu Surah.</p>
+          <h4>Religious Poster</h4>
+          <p>A religious poster explaining one of the Surahs in the Quran.</p>
           <div class="btn-group"><span class="btn-view"><i class="fas fa-eye"></i> Preview</span></div>
         </div>
       </div>
 
       <div class="portfolio-item" onclick="openCard({
         img:'canva5.png',
-        title:'Sungai Kehidupan',
-        tags:['Canva','Infografis','Personal'],
-        desc:'Desain infografis Sungai Kehidupan yang menceritakan perjalanan hidup secara visual dan penuh makna.',
-        actions:[{label:'Lihat Gambar',cls:'btn-view',icon:'fas fa-eye',href:'#',mode:'img'}]
+        title:'River of Life',
+        tags:['Canva','Infographic','Personal'],
+        desc:'A River of Life infographic design that visually and meaningfully tells the story of my life journey.',
+        actions:[{label:'View Image',cls:'btn-view',icon:'fas fa-eye',href:'#',mode:'img'}]
       })">
         <div class="portfolio-img-wrapper">
-          <img src="canva4.jpg" alt="Sungai Kehidupan" class="portfolio-img"
-               onerror="this.src='https://placehold.co/600x400/d5e8d0/4aae77?text=Sungai'">
+          <img src="canva5.png" alt="River of Life" class="portfolio-img"
+               onerror="this.src='https://placehold.co/600x400/d5e8d0/4aae77?text=River+of+Life'">
         </div>
         <div class="portfolio-info">
-          <h4>Sungai Kehidupan</h4>
-          <p>Sungai ini menjelaskan kehidupan tentang saya.</p>
+          <h4>River of Life</h4>
+          <p>An infographic that represents my life journey and personal experiences.</p>
           <div class="btn-group"><span class="btn-view"><i class="fas fa-eye"></i> Preview</span></div>
         </div>
       </div>
@@ -430,9 +424,9 @@
       <div class="portfolio-item" onclick="openCard({
         img:'canva6.jpeg',
         title:'PPKN Design',
-        tags:['Canva','Poster','Sejarah'],
-        desc:'Design poster PPKN yang menjelaskan tentang perjuangan pahlawan dengan visual yang kuat dan bersejarah.',
-        actions:[{label:'Lihat Gambar',cls:'btn-view',icon:'fas fa-eye',href:'#',mode:'img'}]
+        tags:['Canva','Poster','History'],
+        desc:'A PPKN poster design highlighting the struggles and contributions of national heroes through strong and historical visuals.',
+        actions:[{label:'View Image',cls:'btn-view',icon:'fas fa-eye',href:'#',mode:'img'}]
       })">
         <div class="portfolio-img-wrapper">
           <img src="canva6.jpeg" alt="PPKN Design" class="portfolio-img"
@@ -440,7 +434,7 @@
         </div>
         <div class="portfolio-info">
           <h4>PPKN Design</h4>
-          <p>Design ini menjelaskan tentang perjuangan pahlawan.</p>
+          <p>A design that highlights the struggles and contributions of national heroes.</p>
           <div class="btn-group"><span class="btn-view"><i class="fas fa-eye"></i> Preview</span></div>
         </div>
       </div>
@@ -449,8 +443,8 @@
         img:'canva7.png',
         title:'Branding Kit',
         tags:['Canva','Branding','Visual Identity'],
-        desc:'Visual identity dan brand guideline untuk menjual produk digital. Mencakup logo, palet warna, dan tipografi.',
-        actions:[{label:'Lihat Gambar',cls:'btn-view',icon:'fas fa-eye',href:'#',mode:'img'}]
+        desc:'A visual identity and brand guideline designed for selling digital products. It includes a logo, color palette, and typography.',
+        actions:[{label:'View Image',cls:'btn-view',icon:'fas fa-eye',href:'#',mode:'img'}]
       })">
         <div class="portfolio-img-wrapper">
           <img src="canva7.png" alt="Branding Kit" class="portfolio-img"
@@ -458,12 +452,12 @@
         </div>
         <div class="portfolio-info">
           <h4>Branding Kit</h4>
-          <p>Visual identity dan brand guideline untuk menjual produk digital.</p>
+          <p>A visual identity and brand guideline for selling digital products.</p>
           <div class="btn-group"><span class="btn-view"><i class="fas fa-eye"></i> Preview</span></div>
         </div>
       </div>
 
-    </div><!-- /design-scroll -->
+    </div>
   </div>
 
   <!-- ══════════════════════════
@@ -477,173 +471,162 @@
 
     <div class="cert-grid" id="certGrid">
 
-      <!-- CERT 1 -->
       <div class="cert-item" onclick="openImg('Dicoding1.png','Web Development Bootcamp')">
         <div class="cert-img-wrap">
           <img src="Dicoding1.png" alt="Web Dev Bootcamp" class="cert-img"
-               onerror="this.src='https://placehold.co/600x380/f0d5e8/b84a72?text=Sertifikat'">
+               onerror="this.src='https://placehold.co/600x380/f0d5e8/b84a72?text=Certificate'">
         </div>
         <div class="cert-info">
           <h4>Web Development Bootcamp</h4>
-          <p>Pelatihan intensif HTML, CSS, JavaScript dari Dicoding.</p>
+          <p>Intensive training in HTML, CSS, and JavaScript through Dicoding.</p>
           <div class="cert-links">
-            <span class="cert-link view" onclick="event.stopPropagation();openImg('Dicoding1.png','Web Development Bootcamp')"><i class="fas fa-eye"></i> Lihat</span>
+            <span class="cert-link view" onclick="event.stopPropagation();openImg('Dicoding1.png','Web Development Bootcamp')"><i class="fas fa-eye"></i> View</span>
             <a class="cert-link drive" href="https://drive.google.com/drive/folders/1lqVbAI1_Y1VnaQqOD6qTIdKVmeWW-pHf?usp=sharing" target="_blank" onclick="event.stopPropagation()"><i class="fab fa-google-drive"></i> Drive</a>
           </div>
         </div>
       </div>
 
-      <!-- CERT 2 -->
       <div class="cert-item" onclick="openImg('Dicoding2.png','Fundamental Programming')">
         <div class="cert-img-wrap">
           <img src="Dicoding2.png" alt="Fundamental Programming" class="cert-img"
-               onerror="this.src='https://placehold.co/600x380/d5e8f0/4a90e2?text=Sertifikat'">
+               onerror="this.src='https://placehold.co/600x380/d5e8f0/4a90e2?text=Certificate'">
         </div>
         <div class="cert-info">
           <h4>Fundamental Programming</h4>
-          <p>Menyelesaikan dasar pemrograman dan logika coding.</p>
+          <p>Completed fundamental programming and coding logic training.</p>
           <div class="cert-links">
-            <span class="cert-link view" onclick="event.stopPropagation();openImg('Dicoding2.png','Fundamental Programming')"><i class="fas fa-eye"></i> Lihat</span>
+            <span class="cert-link view" onclick="event.stopPropagation();openImg('Dicoding2.png','Fundamental Programming')"><i class="fas fa-eye"></i> View</span>
             <a class="cert-link drive" href="https://drive.google.com/drive/folders/1lqVbAI1_Y1VnaQqOD6qTIdKVmeWW-pHf?usp=sharing" target="_blank" onclick="event.stopPropagation()"><i class="fab fa-google-drive"></i> Drive</a>
           </div>
         </div>
       </div>
 
-      <!-- CERT 3 -->
       <div class="cert-item" onclick="openImg('Dicoding3.png','Web Development Basics')">
         <div class="cert-img-wrap">
           <img src="Dicoding3.png" alt="Web Development Basics" class="cert-img"
-               onerror="this.src='https://placehold.co/600x380/e8d5f0/a855f7?text=Sertifikat'">
+               onerror="this.src='https://placehold.co/600x380/e8d5f0/a855f7?text=Certificate'">
         </div>
         <div class="cert-info">
           <h4>Web Development Basics</h4>
-          <p>Mempelajari HTML, CSS, dan JavaScript dasar.</p>
+          <p>Learned the basics of HTML, CSS, and JavaScript.</p>
           <div class="cert-links">
-            <span class="cert-link view" onclick="event.stopPropagation();openImg('Dicoding3.png','Web Development Basics')"><i class="fas fa-eye"></i> Lihat</span>
+            <span class="cert-link view" onclick="event.stopPropagation();openImg('Dicoding3.png','Web Development Basics')"><i class="fas fa-eye"></i> View</span>
             <a class="cert-link drive" href="https://drive.google.com/drive/folders/1lqVbAI1_Y1VnaQqOD6qTIdKVmeWW-pHf?usp=sharing" target="_blank" onclick="event.stopPropagation()"><i class="fab fa-google-drive"></i> Drive</a>
           </div>
         </div>
       </div>
 
-      <!-- CERT 4 -->
       <div class="cert-item" onclick="openImg('Dicoding4.png','Introduction to Programming')">
         <div class="cert-img-wrap">
           <img src="Dicoding4.png" alt="Introduction to Programming" class="cert-img"
-               onerror="this.src='https://placehold.co/600x380/f5e0c0/fbbf24?text=Sertifikat'">
+               onerror="this.src='https://placehold.co/600x380/f5e0c0/fbbf24?text=Certificate'">
         </div>
         <div class="cert-info">
           <h4>Introduction to Programming</h4>
-          <p>Belajar konsep dasar logika pemrograman.</p>
+          <p>Learned the fundamentals of programming and coding logic.</p>
           <div class="cert-links">
-            <span class="cert-link view" onclick="event.stopPropagation();openImg('Dicoding4.png','Introduction to Programming')"><i class="fas fa-eye"></i> Lihat</span>
+            <span class="cert-link view" onclick="event.stopPropagation();openImg('Dicoding4.png','Introduction to Programming')"><i class="fas fa-eye"></i> View</span>
             <a class="cert-link drive" href="https://drive.google.com/drive/folders/1lqVbAI1_Y1VnaQqOD6qTIdKVmeWW-pHf?usp=sharing" target="_blank" onclick="event.stopPropagation()"><i class="fab fa-google-drive"></i> Drive</a>
           </div>
         </div>
       </div>
 
-      <!-- CERT 5 -->
       <div class="cert-item" onclick="openImg('Dicoding5.png','Front-End Web Development')">
         <div class="cert-img-wrap">
           <img src="Dicoding5.png" alt="Front-End Web Development" class="cert-img"
-               onerror="this.src='https://placehold.co/600x380/d5f0e8/22c55e?text=Sertifikat'">
+               onerror="this.src='https://placehold.co/600x380/d5f0e8/22c55e?text=Certificate'">
         </div>
         <div class="cert-info">
           <h4>Front-End Web Development</h4>
-          <p>Membuat website responsif dan modern.</p>
+          <p>Created responsive and modern websites.</p>
           <div class="cert-links">
-            <span class="cert-link view" onclick="event.stopPropagation();openImg('Dicoding5.png','Front-End Web Development')"><i class="fas fa-eye"></i> Lihat</span>
+            <span class="cert-link view" onclick="event.stopPropagation();openImg('Dicoding5.png','Front-End Web Development')"><i class="fas fa-eye"></i> View</span>
             <a class="cert-link drive" href="https://drive.google.com/drive/folders/1lqVbAI1_Y1VnaQqOD6qTIdKVmeWW-pHf?usp=sharing" target="_blank" onclick="event.stopPropagation()"><i class="fab fa-google-drive"></i> Drive</a>
           </div>
         </div>
       </div>
 
-      <!-- CERT 6 -->
       <div class="cert-item" onclick="openImg('ser ing.png','English Certificate')">
         <div class="cert-img-wrap">
           <img src="ser ing.png" alt="English Certificate" class="cert-img"
-               onerror="this.src='https://placehold.co/600x380/dbeafe/3b82f6?text=Sertifikat'">
+               onerror="this.src='https://placehold.co/600x380/dbeafe/3b82f6?text=Certificate'">
         </div>
         <div class="cert-info">
           <h4>English Certificate</h4>
-          <p>Dasar komunikasi menggunakan bahasa Inggris.</p>
+          <p>Basic communication skills in English.</p>
           <div class="cert-links">
-            <span class="cert-link view" onclick="event.stopPropagation();openImg('ser ing.png','English Certificate')"><i class="fas fa-eye"></i> Lihat</span>
+            <span class="cert-link view" onclick="event.stopPropagation();openImg('ser ing.png','English Certificate')"><i class="fas fa-eye"></i> View</span>
             <a class="cert-link drive" href="https://drive.google.com/drive/folders/1lqVbAI1_Y1VnaQqOD6qTIdKVmeWW-pHf?usp=sharing" target="_blank" onclick="event.stopPropagation()"><i class="fab fa-google-drive"></i> Drive</a>
           </div>
         </div>
       </div>
 
-      <!-- CERT 7 -->
-      <div class="cert-item" onclick="openImg('Dicoding1.png','Cloud Practitioner')">
+      <div class="cert-item" onclick="openImg('Dicoding1.png','Top 15 Capstone Project')">
         <div class="cert-img-wrap">
-          <img src="Dicoding1.png" alt="Cloud Practitioner" class="cert-img"
-               onerror="this.src='https://placehold.co/600x380/ffe4e6/f43f5e?text=Sertifikat'">
+          <img src="Dicoding1.png" alt="Top 15 Capstone Project" class="cert-img"
+               onerror="this.src='https://placehold.co/600x380/ffe4e6/f43f5e?text=Certificate'">
         </div>
         <div class="cert-info">
-          <h4>Cloud Practitioner</h4>
-          <p>Pengenalan cloud computing AWS.</p>
+          <h4>Top 15 Capstone Project</h4>
+          <p>Awarded for outstanding performance in the capstone project.</p>
           <div class="cert-links">
-            <span class="cert-link view" onclick="event.stopPropagation();openImg('Dicoding1.png','Cloud Practitioner')"><i class="fas fa-eye"></i> Lihat</span>
+            <span class="cert-link view" onclick="event.stopPropagation();openImg('Dicoding1.png','Top 15 Capstone Project')"><i class="fas fa-eye"></i> View</span>
             <a class="cert-link drive" href="https://drive.google.com/drive/folders/1lqVbAI1_Y1VnaQqOD6qTIdKVmeWW-pHf?usp=sharing" target="_blank" onclick="event.stopPropagation()"><i class="fab fa-google-drive"></i> Drive</a>
           </div>
         </div>
       </div>
 
-      <!-- CERT 8 -->
       <div class="cert-item" onclick="openImg('Dicoding3.png','JavaScript Essentials')">
         <div class="cert-img-wrap">
           <img src="Dicoding3.png" alt="JavaScript Essentials" class="cert-img"
-               onerror="this.src='https://placehold.co/600x380/fef9c3/ca8a04?text=Sertifikat'">
+               onerror="this.src='https://placehold.co/600x380/fef9c3/ca8a04?text=Certificate'">
         </div>
         <div class="cert-info">
           <h4>JavaScript Essentials</h4>
-          <p>Belajar JavaScript untuk website interaktif.</p>
+          <p>Learned the basics of JavaScript for interactive websites.</p>
           <div class="cert-links">
-            <span class="cert-link view" onclick="event.stopPropagation();openImg('Dicoding3.png','JavaScript Essentials')"><i class="fas fa-eye"></i> Lihat</span>
+            <span class="cert-link view" onclick="event.stopPropagation();openImg('Dicoding3.png','JavaScript Essentials')"><i class="fas fa-eye"></i> View</span>
             <a class="cert-link drive" href="https://drive.google.com/drive/folders/1lqVbAI1_Y1VnaQqOD6qTIdKVmeWW-pHf?usp=sharing" target="_blank" onclick="event.stopPropagation()"><i class="fab fa-google-drive"></i> Drive</a>
           </div>
         </div>
       </div>
 
-      <!-- CERT 9 -->
-      <div class="cert-item" onclick="openImg('Dicoding4.png','React JS Dasar')">
+      <div class="cert-item" onclick="openImg('Dicoding4.png','React JS Basics')">
         <div class="cert-img-wrap">
-          <img src="Dicoding4.png" alt="React JS Dasar" class="cert-img"
-               onerror="this.src='https://placehold.co/600x380/d1fae5/059669?text=Sertifikat'">
+          <img src="Dicoding4.png" alt="React JS Basics" class="cert-img"
+               onerror="this.src='https://placehold.co/600x380/d1fae5/059669?text=Certificate'">
         </div>
         <div class="cert-info">
-          <h4>React JS Dasar</h4>
-          <p>Pengenalan React JS dan komponen modern.</p>
+          <h4>React JS Basics</h4>
+          <p>Learned the fundamentals of React JS and modern components.</p>
           <div class="cert-links">
-            <span class="cert-link view" onclick="event.stopPropagation();openImg('Dicoding4.png','React JS Dasar')"><i class="fas fa-eye"></i> Lihat</span>
+            <span class="cert-link view" onclick="event.stopPropagation();openImg('Dicoding4.png','React JS Basics')"><i class="fas fa-eye"></i> View</span>
             <a class="cert-link drive" href="https://drive.google.com/drive/folders/1lqVbAI1_Y1VnaQqOD6qTIdKVmeWW-pHf?usp=sharing" target="_blank" onclick="event.stopPropagation()"><i class="fab fa-google-drive"></i> Drive</a>
           </div>
         </div>
       </div>
 
-      <!-- CERT 10 -->
       <div class="cert-item" onclick="openImg('Dicoding5.png','Basic UI/UX Design')">
         <div class="cert-img-wrap">
           <img src="Dicoding5.png" alt="Basic UI/UX Design" class="cert-img"
-               onerror="this.src='https://placehold.co/600x380/ede9fe/7c3aed?text=Sertifikat'">
+               onerror="this.src='https://placehold.co/600x380/ede9fe/7c3aed?text=Certificate'">
         </div>
         <div class="cert-info">
           <h4>Basic UI/UX Design</h4>
-          <p>Belajar desain UI/UX modern dan sederhana.</p>
+          <p>Learned modern and simple UI/UX design principles.</p>
           <div class="cert-links">
-            <span class="cert-link view" onclick="event.stopPropagation();openImg('Dicoding5.png','Basic UI/UX Design')"><i class="fas fa-eye"></i> Lihat</span>
+            <span class="cert-link view" onclick="event.stopPropagation();openImg('Dicoding5.png','Basic UI/UX Design')"><i class="fas fa-eye"></i> View</span>
             <a class="cert-link drive" href="https://drive.google.com/drive/folders/1lqVbAI1_Y1VnaQqOD6qTIdKVmeWW-pHf?usp=sharing" target="_blank" onclick="event.stopPropagation()"><i class="fab fa-google-drive"></i> Drive</a>
           </div>
         </div>
       </div>
 
-    </div><!-- /certGrid -->
+    </div>
 
-    <!-- Pagination -->
     <div class="cert-pagination">
-      <button class="cert-page-btn" id="certPrev"><i class="fas fa-chevron-left"></i> Sebelumnya</button>
+      <button class="cert-page-btn" id="certPrev"><i class="fas fa-chevron-left"></i> Previous</button>
       <span class="cert-page-info" id="certPageInfo"></span>
-      <button class="cert-page-btn" id="certNext">Selanjutnya <i class="fas fa-chevron-right"></i></button>
+      <button class="cert-page-btn" id="certNext">Next <i class="fas fa-chevron-right"></i></button>
     </div>
   </div>
 
@@ -653,122 +636,121 @@
   <div class="portfolio-category">
     <div class="category-header">
       <i class="fas fa-trophy"></i>
-      <h3>🏅 Awards &amp; Prestasi</h3>
+      <h3>🏅 Awards &amp; Achievements</h3>
     </div>
     <div class="awards-grid">
 
+      <!-- AWARD 1 -->
       <div class="award-item">
-
-  <div class="award-img-wrap">
-    <img src="Lomba1.jpeg"
-         alt="Lomba Menyanyi"
-         class="award-img"
-         onclick="openImg('Lomba1.jpeg','Juara 3 Lomba Menyanyi Umum 🎤')"
-         onerror="this.src='https://placehold.co/600x400/f0d5e8/b84a72?text=Award'">
-  </div>
-
-  <div class="award-info">
-    <h4>Lomba Menyanyi</h4>
-    <p>Juara 3 Lomba Menyanyi Umum. "d'Circle-Over'O"</p>
-
-    <!-- BUTTON VIEW -->
-    <div class="award-btn-group">
-      <button class="btn-view"
-        onclick="openImg('Lomba1.jpeg','Juara 3 Lomba Menyanyi Umum 🎤')">
-        <i class="fas fa-eye"></i> View
-      </button>
-    </div>
-
-  </div>
-</div>
-
-      <div class="award-item" onclick="openImg('prov.jpeg','Lomba Menyanyi FLS2N Tingkat Provinsi 🏆')">
         <div class="award-img-wrap">
-          <img src="prov.jpeg" alt="FLS2N Provinsi" class="award-img"
+          <img src="Lomba1.jpeg" alt="Singing Competition" class="award-img"
+               onclick="openImg('Lomba1.jpeg','3rd Place in the General Singing Competition 🎤')"
+               onerror="this.src='https://placehold.co/600x400/f0d5e8/b84a72?text=Award'">
+        </div>
+        <div class="award-info">
+          <h4>Singing Competition</h4>
+          <p>3rd Place in the General Singing Competition. "d'Circle-Over'O"</p>
+          <div class="award-btn-group">
+            <button class="btn-view"
+              onclick="openImg('Lomba1.jpeg','3rd Place in the General Singing Competition 🎤')">
+              <i class="fas fa-eye"></i> View
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- AWARD 2 -->
+      <div class="award-item">
+        <div class="award-img-wrap">
+          <img src="prov.jpeg" alt="FLS2N Provincial Competition" class="award-img"
+               onclick="openImg('prov.jpeg','FLS2N Provincial-Level Singing Competition 🏆')"
                onerror="this.src='https://placehold.co/600x400/d5e8f0/4a90e2?text=Award'">
         </div>
         <div class="award-info">
-          <h4>Lomba Menyanyi FLS2N</h4>
-          <p>Lomba Menyanyi FLS2N Tingkat Provinsi.</p>
-           <!-- BUTTON VIEW -->
-    <div class="award-btn-group">
-      <button class="btn-view"
-        onclick="openImg('prov.jpeg','Lomba Menyanyi FLS2N Tingkat Provinsi 🏆')">
-        <i class="fas fa-eye"></i> View
-      </button>
-    </div>
+          <h4>FLS2N Singing Competition</h4>
+          <p>FLS2N Provincial-Level Singing Competition.</p>
+          <div class="award-btn-group">
+            <button class="btn-view"
+              onclick="openImg('prov.jpeg','FLS2N Provincial-Level Singing Competition 🏆')">
+              <i class="fas fa-eye"></i> View
+            </button>
+          </div>
         </div>
       </div>
 
-      <div class="award-item" onclick="openImg('lomba3.jpeg','Juara 1 FLS2N Tingkat Kabupaten 🥇')">
+      <!-- AWARD 3 -->
+      <div class="award-item">
         <div class="award-img-wrap">
-          <img src="lomba3.jpeg" alt="FLS2N Kabupaten" class="award-img"
+          <img src="lomba3.jpeg" alt="FLS2N Regency Competition" class="award-img"
+               onclick="openImg('lomba3.jpeg','1st Place in FLS2N Regency-Level Singing Competition 🥇')"
                onerror="this.src='https://placehold.co/600x400/e8d5f0/a855f7?text=Award'">
         </div>
         <div class="award-info">
-          <h4>FLS2N Tingkat Kabupaten</h4>
-          <p>Juara 1 Lomba Menyanyi Tingkat Kabupaten.</p>
-           <!-- BUTTON VIEW -->
-    <div class="award-btn-group">
-      <button class="btn-view"
-        onclick="openImg('lomba3.jpeg','Juara 1 FLS2N Tingkat Kabupaten 🥇')">
-        <i class="fas fa-eye"></i> View
-      </button>
-    </div>
+          <h4>FLS2N Regency-Level Competition</h4>
+          <p>1st Place in the Regency-Level Singing Competition.</p>
+          <div class="award-btn-group">
+            <button class="btn-view"
+              onclick="openImg('lomba3.jpeg','1st Place in FLS2N Regency-Level Singing Competition 🥇')">
+              <i class="fas fa-eye"></i> View
+            </button>
+          </div>
         </div>
       </div>
 
-      <div class="award-item" onclick="openImg('lomba4.jpeg','Juara 1 Lomba Menyanyi Islami 🥇')">
+      <!-- AWARD 4 -->
+      <div class="award-item">
         <div class="award-img-wrap">
-          <img src="lomba4.jpeg" alt="Lomba Menyanyi Islami" class="award-img"
+          <img src="lomba4.jpeg" alt="Islamic Singing Competition" class="award-img"
+               onclick="openImg('lomba4.jpeg','1st Place in Islamic Singing Competition 🥇')"
                onerror="this.src='https://placehold.co/600x400/fef9c3/ca8a04?text=Award'">
         </div>
         <div class="award-info">
-          <h4>Lomba Menyanyi Islami</h4>
-          <p>Juara 1 Lomba Menyanyi Islami. "One Day Islamic"</p>
-           <!-- BUTTON VIEW -->
-    <div class="award-btn-group">
-      <button class="btn-view"
-        onclick="openImg('lomba4.jpeg','Juara 1 Lomba Menyanyi Islami 🥇')">
-        <i class="fas fa-eye"></i> View
-      </button>
-    </div>
+          <h4>Islamic Singing Competition</h4>
+          <p>1st Place in the Islamic Singing Competition. "One Day Islamic"</p>
+          <div class="award-btn-group">
+            <button class="btn-view"
+              onclick="openImg('lomba4.jpeg','1st Place in Islamic Singing Competition 🥇')">
+              <i class="fas fa-eye"></i> View
+            </button>
+          </div>
         </div>
       </div>
 
-      <div class="award-item" onclick="openImg('lomba5.jpeg','Medali Perak Paduan Suara 🥈')">
+      <!-- AWARD 5 -->
+      <div class="award-item">
         <div class="award-img-wrap">
-          <img src="lomba5.jpeg" alt="Paduan Suara" class="award-img"
+          <img src="lomba5.jpeg" alt="Choir Competition" class="award-img"
+               onclick="openImg('lomba5.jpeg','Silver Medal in Choir Competition 🥈')"
                onerror="this.src='https://placehold.co/600x400/d1fae5/059669?text=Award'">
         </div>
         <div class="award-info">
-          <h4>Lomba Paduan Suara</h4>
-          <p>Mendapatkan Medali Perak Kategori Umum.</p>
-           <!-- BUTTON VIEW -->
-    <div class="award-btn-group">
-      <button class="btn-view"
-        onclick="openImg('lomba5.jpeg','Medali Perak Paduan Suara 🥈')">
-        <i class="fas fa-eye"></i> View
-      </button>
-    </div>
+          <h4>Choir Competition</h4>
+          <p>Received a Silver Medal in the General Category.</p>
+          <div class="award-btn-group">
+            <button class="btn-view"
+              onclick="openImg('lomba5.jpeg','Silver Medal in Choir Competition 🥈')">
+              <i class="fas fa-eye"></i> View
+            </button>
+          </div>
         </div>
       </div>
 
-      <div class="award-item" onclick="openImg('foto6.jpeg','Medali Perak Paduan Suara 🥈')">
+      <!-- AWARD 6 -->
+      <div class="award-item">
         <div class="award-img-wrap">
-          <img src="foto6.jpeg" alt="Paduan Suara 2" class="award-img"
+          <img src="foto6.jpeg" alt="Choir Competition 2" class="award-img"
+               onclick="openImg('foto6.jpeg','Silver Medal in Choir Competition 🥈')"
                onerror="this.src='https://placehold.co/600x400/dbeafe/3b82f6?text=Award'">
         </div>
         <div class="award-info">
-          <h4>Lomba Paduan Suara</h4>
-          <p>Mendapatkan Medali Perak Kategori Umum.</p>
-           <!-- BUTTON VIEW -->
-    <div class="award-btn-group">
-      <button class="btn-view"
-        onclick="openImg('foto6.jpeg','Medali Perak Paduan Suara 🥈')">
-        <i class="fas fa-eye"></i> View
-      </button>
-    </div>
+          <h4>Choir Competition</h4>
+          <p>Received a Silver Medal in the General Category.</p>
+          <div class="award-btn-group">
+            <button class="btn-view"
+              onclick="openImg('foto6.jpeg','Silver Medal in Choir Competition 🥈')">
+              <i class="fas fa-eye"></i> View
+            </button>
+          </div>
         </div>
       </div>
 
@@ -782,7 +764,6 @@
   <p><i class="fas fa-heart" style="color:#e86b9c;"></i> Personal Branding | Ferissa Ilen Aswa Aulia | 2026</p>
 </footer>
 
-<!-- ════ ALL SCRIPTS AT BOTTOM ════ -->
 <script src="main.js"></script>
 <script>
 /* ── Unified Popup ─────────────────────────────────────────────────── */
@@ -802,25 +783,21 @@ function closePopup() {
   uniImg.style.display  = 'none';
   uniCap.style.display  = 'none';
   uniCard.style.display = 'none';
-  uniImg.src = ''; // reset
+  uniImg.src = '';
 }
 
-// Close on button click
 uniClose.addEventListener('click', closePopup);
-// Close on backdrop click
 popup.addEventListener('click', function(e) {
   if (e.target === popup) closePopup();
 });
-// Close on Escape
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closePopup();
 });
 
-/* Open image fullscreen */
 function openImg(src, caption) {
   uniImg.src = src;
   uniImg.alt = caption || '';
-  uniImg.onerror = () => { uniImg.src = 'https://placehold.co/600x400/f0d5e8/b84a72?text=Foto'; };
+  uniImg.onerror = () => { uniImg.src = 'https://placehold.co/600x400/f0d5e8/b84a72?text=Photo'; };
   uniCap.textContent = caption || '';
   uniImg.style.display  = 'block';
   uniCap.style.display  = caption ? 'block' : 'none';
@@ -828,9 +805,7 @@ function openImg(src, caption) {
   openPopupBase();
 }
 
-/* Open card modal (project / design detail) */
 function openCard(data) {
-  // fill card
   const img = document.getElementById('ucImg');
   img.src = data.img || '';
   img.onerror = () => { img.src = 'https://placehold.co/600x400/f0d5e8/b84a72?text=Preview'; };
@@ -849,7 +824,6 @@ function openCard(data) {
   actEl.innerHTML = '';
   (data.actions || []).forEach(a => {
     if (a.mode === 'img') {
-      // show image fullscreen button
       const btn = document.createElement('button');
       btn.className = a.cls || 'btn-view';
       btn.style.cssText = 'border:none;cursor:pointer;font-family:Poppins,sans-serif;';
@@ -887,7 +861,7 @@ function openCard(data) {
     items.forEach((item, i) => {
       item.style.display = (i >= page * perPage && i < (page + 1) * perPage) ? '' : 'none';
     });
-    info.textContent  = `Halaman ${page + 1} / ${total}`;
+    info.textContent  = `Page ${page + 1} / ${total}`;
     prevBtn.disabled  = page === 0;
     nextBtn.disabled  = page === total - 1;
   }

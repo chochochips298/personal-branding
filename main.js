@@ -78,7 +78,7 @@ function initTyping() {
   if (!nameEl) return;
 
   const nameText  = "Ferissa Ilen Aswa Aulia";
-  const aboutText = "Saya pelajar Informatika yang passion di bidang pengembangan web dan desain antarmuka. Saya percaya bahwa teknologi dan estetika bisa berjalan beriringan menciptakan pengalaman digital yang bermakna.";
+  const aboutText = "I am an Informatics student passionate about web development and interface design. I believe technology and aesthetics can go hand in hand to create meaningful digital experiences.";
 
   let ni = 0, ai = 0;
 
@@ -167,7 +167,7 @@ function initCertPagination() {
     items.forEach((item, i) => {
       item.style.display = (i >= page * perPage && i < (page + 1) * perPage) ? '' : 'none';
     });
-    if (info) info.textContent = `Halaman ${page + 1} / ${total}`;
+    if (info) info.textContent = `Page ${page + 1} / ${total}`;
     if (prevBtn) prevBtn.disabled = page === 0;
     if (nextBtn) nextBtn.disabled = page === total - 1;
   }
